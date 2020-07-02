@@ -44,14 +44,14 @@ CREATE TABLE IF NOT EXISTS `beerStyles` (
 	`srmMax` decimal(2) NOT NULL,
 	`createdDate` TIMESTAMP NULL,
 	`modifiedDate` TIMESTAMP NULL,
-	
+
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB	DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `beerStyles`
 --
-
+DELETE FROM `beerStyles`;
 INSERT INTO `beerStyles`( name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax, createdDate, modifiedDate ) VALUES ( 'Lite American Lager', '1A', 'Light Lager', '1.028', '1.04', '0.998', '1.008', '2.8', '4.2', '8', '12', '2', '3', NOW(), NOW() );
 INSERT INTO `beerStyles`( name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax, createdDate, modifiedDate ) VALUES ( 'Standard American Lager', '1B', 'Light Lager', '1.04', '1.05', '1.004', '1.01', '4.2', '5.1', '8', '15', '2', '4', NOW(), NOW() );
 INSERT INTO `beerStyles`( name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax, createdDate, modifiedDate ) VALUES ( 'Premium American Lager', '1C', 'Light Lager', '1.046', '1.056', '1.008', '1.012', '4.6', '6', '15', '25', '2', '6', NOW(), NOW() );
@@ -180,7 +180,7 @@ FOREIGN KEY (`beerStyleId`) REFERENCES beerStyles(`id`) ON DELETE CASCADE
 -- Table structure for table `config`
 --
 
-CREATE TABLE `config` (
+CREATE TABLE IF NOT EXISTS `config` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`configName` varchar(50) NOT NULL,
 	`configValue` longtext NOT NULL,
@@ -196,7 +196,7 @@ CREATE TABLE `config` (
 --
 -- Dumping data for table `config`
 --
-
+DELETE FROM `config`;
 INSERT INTO `config` ( configName, configValue, displayName, showOnPanel, createdDate, modifiedDate ) VALUES ( 'showTapNumCol', '1', 'Tap Column', '1', NOW(), NOW() );
 INSERT INTO `config` ( configName, configValue, displayName, showOnPanel, createdDate, modifiedDate ) VALUES ( 'showSrmCol', '1', 'SRM Column', '1', NOW(), NOW() );
 INSERT INTO `config` ( configName, configValue, displayName, showOnPanel, createdDate, modifiedDate ) VALUES ( 'showIbuCol', '1', 'IBU Column', '1', NOW(), NOW() );
@@ -223,14 +223,14 @@ CREATE TABLE IF NOT EXISTS `kegTypes` (
 	`maxAmount` decimal(6,2) NOT NULL,
 	`createdDate` TIMESTAMP NULL,
 	`modifiedDate` TIMESTAMP NULL,
-	
+
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB	DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kegTypes`
 --
-
+DELETE from `kegTypes`;
 INSERT INTO `kegTypes` ( displayName, maxAmount, createdDate, modifiedDate ) VALUES ( 'Ball Lock (5 gal)', '5', NOW(), NOW() );
 INSERT INTO `kegTypes` ( displayName, maxAmount, createdDate, modifiedDate ) VALUES ( 'Ball Lock (2.5 gal)', '2.5', NOW(), NOW() );
 INSERT INTO `kegTypes` ( displayName, maxAmount, createdDate, modifiedDate ) VALUES ( 'Ball Lock (3 gal)', '3', NOW(), NOW() );
@@ -258,14 +258,14 @@ CREATE TABLE IF NOT EXISTS `kegStatuses` (
 	`name` text NOT NULL,
 	`createdDate` TIMESTAMP NULL,
 	`modifiedDate` TIMESTAMP NULL,
-	
+
 	PRIMARY KEY (`code`)
 ) ENGINE=InnoDB	DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kegStatuses`
 --
-
+DELETE FROM `kegStatuses`;
 INSERT INTO `kegStatuses` ( code, name, createdDate, modifiedDate ) VALUES ( 'SERVING', 'Serving', NOW(), NOW() );
 INSERT INTO `kegStatuses` ( code, name, createdDate, modifiedDate ) VALUES ( 'PRIMARY', 'Primary', NOW(), NOW() );
 INSERT INTO `kegStatuses` ( code, name, createdDate, modifiedDate ) VALUES ( 'SECONDARY', 'Secondary', NOW(), NOW() );
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `kegs` (
 	`active` tinyint(1) NOT NULL DEFAULT 1,
 	`createdDate` TIMESTAMP NULL,
 	`modifiedDate` TIMESTAMP NULL,
-	
+
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`kegStatusCode`) REFERENCES kegStatuses(`Code`) ON DELETE CASCADE,
 	FOREIGN KEY (`kegTypeId`) REFERENCES kegTypes(`id`) ON DELETE CASCADE
@@ -325,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `taps` (
 	`currentAmount` decimal(6,1) NOT NULL,
 	`createdDate` TIMESTAMP NULL,
 	`modifiedDate` TIMESTAMP NULL,
-	
+
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`beerId`) REFERENCES beers(`id`) ON DELETE CASCADE,
 	FOREIGN KEY (`kegId`) REFERENCES kegs(`id`) ON DELETE CASCADE
@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `pours` (
 	`amountPoured` decimal(6,1) NOT NULL,
 	`createdDate` TIMESTAMP NULL,
 	`modifiedDate` TIMESTAMP NULL,
-	
+
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (tapId) REFERENCES taps(id) ON DELETE CASCADE
 ) ENGINE=InnoDB	DEFAULT CHARSET=latin1;
@@ -354,7 +354,7 @@ CREATE TABLE IF NOT EXISTS `pours` (
 -- Table structure for table `Users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`username` varchar(65) CHARACTER SET utf8 NOT NULL,
 	`password` varchar(65) CHARACTER SET utf8 NOT NULL,
@@ -381,6 +381,7 @@ CREATE TABLE IF NOT EXISTS `srmRgb` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data for table `srmRgb`
+DELETE from srmRgb;
 INSERT INTO srmRgb ( srm, rgb, createdDate, modifiedDate ) VALUES ( '0.0','252,252,243', NOW(), NOW() );
 INSERT INTO srmRgb ( srm, rgb, createdDate, modifiedDate ) VALUES ( '0.1','248,248,230', NOW(), NOW() );
 INSERT INTO srmRgb ( srm, rgb, createdDate, modifiedDate ) VALUES ( '0.2','248,248,220', NOW(), NOW() );
@@ -789,7 +790,7 @@ INSERT INTO srmRgb ( srm, rgb, createdDate, modifiedDate ) VALUES ( '40.0','3,4,
 -- Create View `vwGetTapsAmountPoured`
 --
 
-CREATE VIEW vwGetTapsAmountPoured
+CREATE OR REPLACE VIEW vwGetTapsAmountPoured
 AS
 SELECT tapId, SUM(amountPoured) as amountPoured FROM pours GROUP BY tapId;
 
@@ -799,7 +800,7 @@ SELECT tapId, SUM(amountPoured) as amountPoured FROM pours GROUP BY tapId;
 -- Create View `vwGetActiveTaps`
 --
 
-CREATE VIEW vwGetActiveTaps
+CREATE OR REPLACE VIEW vwGetActiveTaps
 AS
 
 SELECT

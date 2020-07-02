@@ -4,8 +4,6 @@ $session=session_id();
 $time=time();
 $time_check=$time-1800; //SET TIME 10 Minute
 
-require 'conn.php';
-
 // username and password sent from form
 $myusername=$_POST['myusername'];
 $mypassword=md5($_POST['mypassword']);
@@ -18,7 +16,7 @@ $myusername = mysql_real_escape_string($myusername);
 $mypassword = mysql_real_escape_string($mypassword);
 
 
-$sql="SELECT * FROM $tbl_name WHERE username='$myusername' and password='$mypassword'";
+$sql="SELECT * FROM users WHERE username='$myusername' and password='$mypassword'";
 $result=mysql_query($sql);
 
 // Mysql_num_row is counting table row

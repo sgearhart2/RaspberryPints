@@ -3,7 +3,6 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
-require_once __DIR__.'/includes/conn.php';
 require_once __DIR__.'/../includes/config_names.php';
 require_once __DIR__.'/includes/html_helper.php';
 require_once __DIR__.'/includes/functions.php';
@@ -51,10 +50,10 @@ $beerStyleList = $beerStyleManager->GetAll();
 require __DIR__.'/header.php';
 ?>
 	<!-- End Header -->
-        
+
     <!-- Top Breadcrumb Start -->
     <div id="breadcrumb">
-    	<ul>	
+    	<ul>
         	<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
         	<li><strong>Location:</strong></li>
             <li><a href="beer_list.php">My Beers</a></li>
@@ -62,8 +61,8 @@ require __DIR__.'/header.php';
             <li class="current">Beer Form</li>
         </ul>
     </div>
-    <!-- Top Breadcrumb End --> 
-     
+    <!-- Top Breadcrumb End -->
+
     <!-- Right Side/Main Content Start -->
     <div id="rightside">
 		 <div class="contentcontainer med left">
@@ -136,50 +135,50 @@ require __DIR__.'/header.php';
 					<input name="save" type="submit" class="btn" value="Save" />
 					<input type="button" class="btn" value="Cancel" onclick="window.location='beer_list.php'" />
 				</td>
-			</tr>								
+			</tr>
 		</table>
 		<br />
-		<div align="right">			
-			 &nbsp &nbsp 
+		<div align="right">
+			 &nbsp &nbsp
 		</div>
 
 	</form>
     </div>
 	<!-- End On Tap Section -->
 
-    <!-- Start Footer -->   
-<?php 
+    <!-- Start Footer -->
+<?php
 require __DIR__.'/footer.php';
 ?>
 
 	<!-- End Footer -->
-          
+
     </div>
     <!-- Right Side/Main Content End -->
-	<!-- Start Left Bar Menu -->   
-<?php 
+	<!-- Start Left Bar Menu -->
+<?php
 require __DIR__.'/left_bar.php';
 ?>
-	<!-- End Left Bar Menu -->  
+	<!-- End Left Bar Menu -->
 	<!-- Start Js  -->
 <?php
 require __DIR__.'/scripts.php';
 ?>
 
 <script>
-	$(function() {		
-		
+	$(function() {
+
 		$('#beer-form').validate({
 		  rules: {
 			name: { required: true },
-			style: { required: true },			
+			style: { required: true },
 			srm: { required: true, number: true },
 			ibu: { required: true, number: true },
 			og: { required: true, number: true },
 			fg: { required: true, number: true }
 		  }
 		});
-		
+
 	});
 </script>
 
@@ -189,7 +188,7 @@ require __DIR__.'/scripts.php';
     <script type='text/javascript'>
       DD_belatedPNG.fix('img, .notifycount, .selected');
     </script>
-    <![endif]--> 
+    <![endif]-->
 
 </body>
 </html>

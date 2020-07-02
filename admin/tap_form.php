@@ -3,7 +3,6 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
-require_once __DIR__.'/includes/conn.php';
 require_once __DIR__.'/../includes/config_names.php';
 require_once __DIR__.'/includes/html_helper.php';
 require_once __DIR__.'/includes/functions.php';
@@ -41,11 +40,11 @@ $kegList = $kegManager->GetAllAvailable();
 $tapNumber = $_GET['tapNumber'];
 if( isset($_GET['id'])){
 	$tap = $tapManager->GetById($_GET['id']);
-	
+
 	if( !array_key_exists($tap->get_kegId(), $kegList) ){
 		$kegList[$tap->get_kegId()] = $kegManager->GetById($tap->get_kegId());
 	}
-	
+
 }else{
 	$tap = new Tap();
 	$tap->set_tapNumber($tapNumber);
@@ -71,10 +70,10 @@ if( isset($_GET['id'])){
 include 'header.php';
 ?>
 	<!-- End Header -->
-		
+
 	<!-- Top Breadcrumb Start -->
 	<div id="breadcrumb">
-		<ul>	
+		<ul>
 			<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
 			<li><strong>Location:</strong></li>
 			<li><a href="tap_list.php">Tap List</a></li>
@@ -82,8 +81,8 @@ include 'header.php';
 			<li class="current">Tap Form</li>
 		</ul>
 	</div>
-	<!-- Top Breadcrumb End --> 
-	
+	<!-- Top Breadcrumb End -->
+
 	<!-- Right Side/Main Content Start -->
 	<div id="rightside">
 		<div class="contentcontainer med left">
@@ -94,7 +93,7 @@ include 'header.php';
 		<input type="hidden" name="id" value="<?php echo $tap->get_id() ?>" />
 		<input type="hidden" name="tapNumber" value="<?php echo $tap->get_tapNumber() ?>" />
 		<input type="hidden" name="active" value="<?php echo $tap->get_active() ?>" />
-		
+
 		<table width="950" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td>
@@ -158,32 +157,32 @@ include 'header.php';
 					<input name="cancel" type="button" class="btn" value="Cancel" onclick="window.location='tap_list.php'"/>
 				</td>
 			</tr>
-											
+
 			</tbody>
 		</table>
 		<br />
-		<div align="right">			
-			&nbsp &nbsp 
+		<div align="right">
+			&nbsp &nbsp
 		</div>
-	
+
 	</form>
 	</div>
 	<!-- End On Tap Section -->
 
-	<!-- Start Footer -->   
-<?php 
+	<!-- Start Footer -->
+<?php
 include 'footer.php';
 ?>
 
 	<!-- End Footer -->
-		
+
 	</div>
 	<!-- Right Side/Main Content End -->
-	<!-- Start Left Bar Menu -->   
-<?php 
+	<!-- Start Left Bar Menu -->
+<?php
 include 'left_bar.php';
 ?>
-	<!-- End Left Bar Menu -->  
+	<!-- End Left Bar Menu -->
 	<!-- Start Js  -->
 <?php
 include 'scripts.php';
@@ -196,32 +195,32 @@ include 'scripts.php';
 	<script type='text/javascript'>
 	DD_belatedPNG.fix('img, .notifycount, .selected');
 	</script>
-	<![endif]--> 
-	
+	<![endif]-->
+
 <script>
 	$(function() {
-		var beerList = { 
-			<?php foreach($beerList as $beerItem){ 
-				echo $beerItem->get_id() . ": " . $beerItem->toJson() . ", "; 
+		var beerList = {
+			<?php foreach($beerList as $beerItem){
+				echo $beerItem->get_id() . ": " . $beerItem->toJson() . ", ";
 			} ?>
 		};
-		
-		var kegList = { 
-			<?php foreach($kegList as $keg){ 
-				echo $keg->get_id() . ": { " . 
+
+		var kegList = {
+			<?php foreach($kegList as $keg){
+				echo $keg->get_id() . ": { " .
 					"maxAmount: '" . $kegTypeManager->GetById($keg->get_kegTypeId())->get_maxAmount() , "'" .
-				"}, "; 
+				"}, ";
 			} ?>
 		};
-		
-		$('#tap-form')	
+
+		$('#tap-form')
 			.on('change', '#beerId', function(){
 				var $this = $(this);
-				
+
 				if( $this.val() ){
 					var $form = $('#tap-form'),
 						beer = beerList[$this.val()];
-						
+
 					$form
 						.find('#srm').val(beer['srm']).end()
 						.find('#ibu').val(beer['ibu']).end()
@@ -231,16 +230,16 @@ include 'scripts.php';
 			})
 			.on('change', '#kegId', function(){
 				var $this = $(this);
-				
+
 				if( $this.val() ){
 					var $form = $('#tap-form'),
 						keg = kegList[$this.val()];
-						
+
 					$form
 						.find('#startAmount').val(keg['maxAmount']).end();
 				}
 			});
-		
+
 		$('#tap-form').validate({
 		rules: {
 			beerId: { required: true },
@@ -252,7 +251,7 @@ include 'scripts.php';
 			startAmount: { required: true, number: true }
 		}
 		});
-		
+
 	});
 </script>
 

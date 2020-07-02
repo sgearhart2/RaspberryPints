@@ -57,10 +57,14 @@ class DB {
     return $results;
   }
 
-  public function execute(string $sql, array $bindVariables = []) : void {
+  public function execute(string $sql, array $bindVariables = []) : bool {
+    // if no bind variables, just execute the query without creating a statement
+    if(count($bindVariables) == 0) {
+      return $this->conn->query($sql);
+    }
     $stmt = $this->prepareStatement($sql, $bindVariables);
 
-    mysqli_stmt_execute($stmt);
+    return mysqli_stmt_execute($stmt);
   }
 
   private function prepareStatement(string $sql, array $bindVariables) : mysqli_stmt {

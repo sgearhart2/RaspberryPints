@@ -3,7 +3,6 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 	//header("location:index.php");
 }
-require 'conn.php';
 require_once '../includes/functions.php';
 
 

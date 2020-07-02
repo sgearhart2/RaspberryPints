@@ -4,7 +4,6 @@ if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
 
-require_once __DIR__.'/includes/conn.php';
 require_once __DIR__.'/../includes/config_names.php';
 require_once __DIR__.'/includes/html_helper.php';
 require_once __DIR__.'/includes/functions.php';
@@ -21,7 +20,7 @@ $beerManager = new BeerManager();
 $beerStyleManager = new BeerStyleManager();
 
 if (isset($_POST['inactivateBeer'])) {
-	$beerManager->Inactivate($_POST['id']);		
+	$beerManager->Inactivate($_POST['id']);
 }
 
 $beers = $beerManager->GetAllActive();
@@ -44,17 +43,17 @@ $beers = $beerManager->GetAllActive();
 include 'header.php';
 ?>
 	<!-- End Header -->
-        
+
     <!-- Top Breadcrumb Start -->
     <div id="breadcrumb">
-    	<ul>	
+    	<ul>
         	<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
         	<li><strong>Location:</strong></li>
-            <li class="current">My Beers</li>            
+            <li class="current">My Beers</li>
         </ul>
     </div>
-    <!-- Top Breadcrumb End --> 
-     
+    <!-- Top Breadcrumb End -->
+
     <!-- Right Side/Main Content Start -->
 <div id="rightside">
 	<div class="contentcontainer lg left">
@@ -62,14 +61,14 @@ include 'header.php';
 			<h2>My Beers </h2>
 		</div>
 		<div class="contentbox">
-		
+
 			<!-- Start On Tap Section -->
-			
+
 			<?php $htmlHelper->ShowMessage(); ?>
-			
+
 			<input type="submit" class="btn" value="Add Beer" onclick="window.location='beer_form.php'" />
 			<br/><br/>
-			
+
 			<table width="770px" border="0" cellspacing="0" cellpadding="0">
 				<thead>
 					<tr>
@@ -80,24 +79,24 @@ include 'header.php';
 					</tr>
 				</thead>
 				<tbody>
-					<?php 
-						if( count($beers) == 0 ){  
+					<?php
+						if( count($beers) == 0 ){
 					?>
 							<tr><td class="no-results" colspan="99">No beers :( Add some?</td></tr>
-					<?php 
-						}else{  
+					<?php
+						}else{
 							foreach ($beers as $beer){
 					?>
 								<tr>
 									<td>
 										<h3><?php echo $beer->get_name() ?></h3><br>
-										<b><?php 
+										<b><?php
 											$beerStyle = $beerStyleManager->GetById($beer->get_beerStyleId());
 											echo $beerStyle->get_name();
 										?></b><br>
 										(BJCP <?php echo $beerStyle->get_catNum() ?> - <?php echo $beerStyle->get_category() ?>)</b><br><br>
 									</td>
-									
+
 									<td>
 										<?php
 											if ( $beer->get_srm() != 0 )
@@ -124,14 +123,14 @@ include 'header.php';
 												echo ""
 										?>
 									</td>
-									
+
 									<td>
 										<b>Yeast</b>: Fermentis S-04<br>
 										<b>Water:</b> Sacramento, CA<br>
 										<b>More:</b> Info Here...<br>
 										<b>More:</b> Info Here...<br>
 									</td>
-									
+
 									<td colspan="3">
 										1.42 oz Northern Brewer (6.8%) @ 60 min<br>
 										2.14 oz Nelson Sauvin (9.1%) @ 30 min<br>
@@ -153,8 +152,8 @@ include 'header.php';
 										</form>
 									</td>
 								</tr>
-					<?php 
-							} 
+					<?php
+							}
 						}
 					?>
 				</tbody>
@@ -163,23 +162,23 @@ include 'header.php';
     </div>
 </div>
 </div>
-	
+
 	<!-- End On Tap Section -->
 
-    <!-- Start Footer -->   
+    <!-- Start Footer -->
 <?php
 include 'footer.php';
 ?>
 
 	<!-- End Footer -->
-          
+
     </div>
     <!-- Right Side/Main Content End -->
-	<!-- Start Left Bar Menu -->   
+	<!-- Start Left Bar Menu -->
 <?php
 include 'left_bar.php';
 ?>
-	<!-- End Left Bar Menu -->  
+	<!-- End Left Bar Menu -->
 	<!-- Start Js  -->
 <?php
 include 'scripts.php';
@@ -200,6 +199,6 @@ include 'scripts.php';
     <script type='text/javascript'>
       DD_belatedPNG.fix('img, .notifycount, .selected');
     </script>
-    <![endif]--> 
+    <![endif]-->
 </body>
 </html>

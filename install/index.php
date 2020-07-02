@@ -59,11 +59,13 @@
 			$sql = 'SELECT id,configName,configValue FROM config where configname = ?';
 
 			$result = $db->get($sql, $bindParams);
-			
+
 			$dbversion = $result[0]['configValue'];
 
+			$dbIniSettings = parse_ini_file(__DIR__."../includes/db.ini");
+
 			echo '<br><select name="selectaction">';
-			if ($dbversion != $rpintsversion) {
+			if ($dbversion != $dbIniSettings['config']['version']) {
 				echo '<option value="upgrade">Upgrade</option>';
 			}
 			echo '<option value="remove">Clear Data</option>';

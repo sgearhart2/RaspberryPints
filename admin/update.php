@@ -3,13 +3,12 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 header("location:index.php");
 }
-require 'includes/conn.php';
 
 // get value of id that sent from address bar
 $beerid=$_GET['beerid'];
 
 // Retrieve data from database
-$sql="SELECT * FROM $tbl_name WHERE beerid='$beerid'";
+$sql="SELECT * FROM taps WHERE beerid='$beerid'";
 $result=mysql_query($sql);
 
 $rows=mysql_fetch_array($result);

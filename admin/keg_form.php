@@ -3,7 +3,6 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
-require_once 'includes/conn.php';
 require_once '../includes/config_names.php';
 require_once 'includes/html_helper.php';
 require_once 'includes/functions.php';
@@ -56,10 +55,10 @@ $kegTypeList = $kegTypeManager->GetAll();
 include 'header.php';
 ?>
 	<!-- End Header -->
-        
+
     <!-- Top Breadcrumb Start -->
     <div id="breadcrumb">
-    	<ul>	
+    	<ul>
         	<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
         	<li><strong>Location:</strong></li>
             <li><a href="keg_list.php">Keg List</a></li>
@@ -67,8 +66,8 @@ include 'header.php';
             <li class="current">Keg Form</li>
         </ul>
     </div>
-    <!-- Top Breadcrumb End --> 
-     
+    <!-- Top Breadcrumb End -->
+
     <!-- Right Side/Main Content Start -->
     <div id="rightside">
 		 <div class="contentcontainer med left">
@@ -94,7 +93,7 @@ include 'header.php';
 				<td>
 					<?php echo $htmlHelper->ToSelectList("kegTypeId", $kegTypeList, "name", "id", $keg->get_kegTypeId(), "Select One"); ?>
 				</td>
-			</tr>	
+			</tr>
 			<tr>
 				<td>
 					Make:
@@ -164,39 +163,39 @@ include 'header.php';
 					<input name="save" type="submit" class="btn" value="Save" />
 					<input type="button" class="btn" value="Cancel" onclick="window.location='keg_list.php'" />
 				</td>
-			</tr>								
+			</tr>
 		</table>
 		<br />
-		<div align="right">			
-			 &nbsp &nbsp 
+		<div align="right">
+			 &nbsp &nbsp
 		</div>
 
 	</form>
     </div>
 	<!-- End On Tap Section -->
 
-    <!-- Start Footer -->   
-<?php 
+    <!-- Start Footer -->
+<?php
 include 'footer.php';
 ?>
 
 	<!-- End Footer -->
-          
+
     </div>
     <!-- Right Side/Main Content End -->
-	<!-- Start Left Bar Menu -->   
-<?php 
+	<!-- Start Left Bar Menu -->
+<?php
 include 'left_bar.php';
 ?>
-	<!-- End Left Bar Menu -->  
+	<!-- End Left Bar Menu -->
 	<!-- Start Js  -->
 <?php
 include 'scripts.php';
 ?>
 
 <script>
-	$(function() {		
-		
+	$(function() {
+
 		$('#keg-form').validate({
 		  rules: {
 			label: { required: true, number: true },
@@ -204,7 +203,7 @@ include 'scripts.php';
 			kegStatusCode: { required: true }
 		  }
 		});
-		
+
 	});
 </script>
 
@@ -214,7 +213,7 @@ include 'scripts.php';
     <script type='text/javascript'>
       DD_belatedPNG.fix('img, .notifycount, .selected');
     </script>
-    <![endif]--> 
-	
+    <![endif]-->
+
 </body>
 </html>

@@ -4,11 +4,10 @@ if(!isset( $_SESSION['myusername'] )){
 header("location:index.php");
 }
 
-require 'includes/conn.php';
 require '../includes/config_names.php';
-require 'includes/configp.php';
+require_once '../includes/DB.php';
 
-?> 
+?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,10 +26,10 @@ require 'includes/configp.php';
 include 'header.php';
 ?>
 <!-- End Header -->
-	
+
 <!-- Top Breadcrumb Start -->
 <div id="breadcrumb">
-	<ul>	
+	<ul>
 		<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
 		<li><strong>Location:</strong></li>
 		<li class="current">Configure Settings</li>
@@ -45,12 +44,15 @@ include 'header.php';
 			<h2>Personalize </h2>
 		</div>
 		<div class="contentbox">
-		<a name="columns"></a> 
-		<h2>Show/Hide Columns</h2><br /> 
+		<a name="columns"></a>
+		<h2>Show/Hide Columns</h2><br />
 		<form method="post" action="update_column.php">
 			<?php
+				$DB = DB::getInstance();
+				$result = $DB->get("select * from config;");
+
 				foreach($result as $row) {
-				echo '<h3>' . $row['displayName'] . ":" . '</h3>' . 
+				echo '<h3>' . $row['displayName'] . ":" . '</h3>' .
 					'On<input type="radio" ' . ($row['configValue']?'checked':'') . ' name="' . str_replace(' ','',$row['id']) . '" value="1">' .
 					'Off<input type="radio" ' . (!$row['configValue']?'checked':'') . ' name="' . str_replace(' ','',$row['id']) . '" value="0"><br>' .
 					'<br>';
@@ -61,20 +63,22 @@ include 'header.php';
 		<hr />
 
 		<?php
-			$sql="SELECT configValue FROM config WHERE configName ='".ConfigNames::HeaderText."'";
-			$result=mysql_query($sql);
-			$headerText=mysql_fetch_array($result);
+			$result = $DB->get(
+				"select configValue from config where configName = ?;",
+				[["type" => DB::BIND_TYPE_STRING, "value" => ConfigNames::HeaderText]]
+			)
+			$headerText= count($result) > 0 ? $result[0]['configValue'] : '';
 		?>
-      <a name="header"></a> 
+      <a name="header"></a>
 		<h2>Header Text</h2>
 		<p>This text appears at the very top of the taplist.</p>
 			<form method="post" action="update_header_text.php">
-				<input type="text" class="mediumbox" value="<?php echo $headerText['configValue']; ?>" name="header_text"> &nbsp 
+				<input type="text" class="mediumbox" value="<?php echo $headerText['configValue']; ?>" name="header_text"> &nbsp
 				<input type="submit" class="btn" name="Submit" value="Submit">
 			</form>
 
 		<hr />
-       <a name="logo"></a> 
+       <a name="logo"></a>
 		<h2>TapList Logo</h2>
 		<p>This logo appears on the taplist.</p>
 			<b>Current image:</b><br /><br />
@@ -82,9 +86,9 @@ include 'header.php';
 			<form enctype="multipart/form-data" action="update_logo.php" method="POST"><br />
 				<input name="uploaded" type="file" accept="image/gif, image/jpg, image/png"/>
 				<input type="submit" class="btn" value="Upload" />
-			</form> 
+			</form>
 			<hr />
-       <a name="logo"></a> 
+       <a name="logo"></a>
 		<h2>Admin Logo</h2>
 		<p>This logo appears on the admin panel.</p>
 			<b>Current image:</b><br /><br />
@@ -92,10 +96,10 @@ include 'header.php';
 			<form enctype="multipart/form-data" action="updateAdminLogo.php" method="POST"><br />
 				<input name="uploaded" type="file" accept="image/gif, image/jpg, image/png"/>
 				<input type="submit" class="btn" value="Upload" />
-			</form> 
+			</form>
 
 		<hr />
-      <a name="background"></a> 
+      <a name="background"></a>
 		<h2>Background Image</h2>
 		<p>This background appears on the taplist.</p>
 			<b>Current image:</b><br /><br />
@@ -106,27 +110,27 @@ include 'header.php';
 			</form>
 			<form action="restore_background.php" method="POST">
 				<input type="submit" class="btn" value="Restore Default Background" />
-			</form> 
+			</form>
 
 	</div>
 </div>
 
 <!-- Start Footer -->
 
-<?php 
+<?php
 include 'footer.php';
 ?>
 
 	<!-- End Footer -->
-		
+
 	</div>
 	<!-- Right Side/Main Content End -->
-	
-	<!-- Start Left Bar Menu -->   
-<?php 
+
+	<!-- Start Left Bar Menu -->
+<?php
 include 'left_bar.php';
 ?>
-	<!-- End Left Bar Menu -->  
+	<!-- End Left Bar Menu -->
 	<!-- Start Js  -->
 <?php
 include 'scripts.php';
@@ -137,6 +141,6 @@ include 'scripts.php';
 	<script type='text/javascript'>
 	DD_belatedPNG.fix('img, .notifycount, .selected');
 	</script>
-	<![endif]--> 
+	<![endif]-->
 </body>
 </html>

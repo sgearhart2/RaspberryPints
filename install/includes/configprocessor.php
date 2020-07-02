@@ -112,9 +112,7 @@ if ($action == 'remove')
 
 	echo "Removing configuration files...";
 	flush();
-	unlink('../../includes/config.php');
-	unlink('../../admin/includes/conn.php');
-	unlink('../../admin/includes/configp.php');
+	unlink('../../includes/db.ini');
 	echo "Success!<br>";
 	flush();
 }
@@ -149,12 +147,15 @@ if ($action == 'install')
 
 	foreach($sql_query as $sql)
 	{
-
-		$DB->execute($sql) or die('error in query');
+		$DB->execute($sql) or die("error in query : $sql");
 	}
 
 	echo "Success!<br>";
 	flush();
+
+
+	//-----------------Create RaspberryPints version file----------
+	include "set_db_ini_version.php";
 
 	//-----------------Add the admin user to the Users DB----------
 	echo "Adding new admin user...";
@@ -192,10 +193,9 @@ if ($action == 'install')
 
 			foreach($sql_query as $sql)
 			{
-				$DB->execute($sql) or die('error in query');
+				$DB->execute($sql) or die("error in query: $sql");
 			}
 
-			mysqli_close($link);
 			echo "Success!<br>";
 			flush();
 		}

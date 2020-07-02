@@ -3,22 +3,8 @@ global $dbuser;
 global $dbpass1;
 global $servername;
 
-function create_ini_string(array $iniSettings) : string {
-  $res = array();
-  foreach($iniSettings as $key => $val) {
-    if(is_array($val)) {
-      $res[] = "[$key]";
-      foreach($val as $sKey => $sVal) {
-        $res[] = "$sKey = " . (is_numeric($sVal) ? $sVal : '"' . $sVal . '"');
-      }
-    }
-    else {
-      $res[] = "$key = " . (is_numeric($val) ? $val : '"' . $val . '"');
-    }
-  }
+require_once 'install_functions.php';
 
-  return implode(PHP_EOL , $res);
-}
 //-----------------Create the db.ini file-----------------
 echo "Update db.ini file...";
 flush();
@@ -29,6 +15,9 @@ $dbIniSettings = [
     'user' => $dbuser,
     'password' => $dbpass1,
     'db' => 'raspberrypints'
+  ],
+  'config' => [
+    'version' => ''
   ]
 ];
 

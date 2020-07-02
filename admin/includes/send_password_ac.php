@@ -1,12 +1,9 @@
 <?
-require("../includes/conn.php");
-
-
 // value sent from form
 $email_to=$_POST['email_to'];
 
 
-$sql="SELECT password FROM $tbl_name WHERE email='$email_to'";
+$sql="SELECT password FROM users WHERE email='$email_to'";
 $result=mysql_query($sql);
 
 // if found this e-mail address, row must be 1 row

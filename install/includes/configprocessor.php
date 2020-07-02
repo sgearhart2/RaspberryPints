@@ -47,12 +47,19 @@ flush();
 //Validate DB connectivity
 echo "Checking DB connectivity...";
 flush();
-$con=mysqli_connect($servername,"root",$rootpass);
+$rootDbInfo = [
+	'server' => $servername,
+	'user' => "root",
+	'password' => $rootpass
+];
+require_once("../../includes/DB.php");
+try {
+	$DB = DB::getInstance($rootDbInfo);
+}
+catch(Exception $ex) {
+	$validerror .= "<br><strong>Cannot connect the the database using the supplied information.</strong>";
+}
 
-if (mysqli_connect_errno())
-  {
-  $validerror .= "<br><strong>Cannot connect the the database using the supplied information.</strong>";
-  }
 echo "Success!<br>";
 flush();
 
@@ -62,6 +69,13 @@ flush();
 if (!is_writable(dirname('../../includes/functions.php')))
 {
    $validerror .= "<br><strong>Cannot write the configuration files. Please check the /includes/ folder permissions. See the RPints Installation page on www.raspberrypints.com.</strong>";
+}
+
+echo "Checking includes/db.ini permissions...";
+flush();
+if (!is_writable(dirname('../../includes/db.ini')))
+{
+	$validerror .= "<br><strong>Cannot write the db ini file. Please check the /includes/ folder permissions. See the RPints Installation page on www.raspberrypints.com.</strong>";
 }
 
 if (!is_writable(dirname('../../admin/includes/checklogin.php')))
@@ -76,7 +90,7 @@ flush();
 
 
 //Display errors and die
-if ($validerror !='') 
+if ($validerror !='')
 	{
 		echo "<html><body>";
 		echo $validerror;
@@ -89,20 +103,13 @@ if ($action == 'remove')
 {
 	echo "Deleting raspberrypints database...";
 	flush();
-	$con=mysqli_connect($servername,"root",$rootpass);
-	// Check connection
-
-	if (mysqli_connect_errno())
-	  {
-	  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	  }
 
 	$sql = "DROP database raspberrypints;";
-	$result = mysqli_query($con,$sql);
-	mysqli_close($con);
+	$DB->execute($sql);
+
 	echo "Success!<br>";
 	flush();
-	
+
 	echo "Removing configuration files...";
 	flush();
 	unlink('../../includes/config.php');
@@ -111,43 +118,20 @@ if ($action == 'remove')
 	echo "Success!<br>";
 	flush();
 }
-	
+
 if ($action == 'install')
 {
-	
-require_once __DIR__.'/config_files.php';
-	
-	//-----------------Create the main config file-----------------
-	echo "Update config files...";
-	flush();
-	
-	file_put_contents('../../includes/config.php', $mainconfigstring);
 
-	echo "Success!<br>";
-	flush();
-	// -----------------Create the admin files----------------------
-	echo "Update admin config files...";
-	flush();
+	//-----------------Create the db.ini file-----------------
+	include "create_db_ini.php";
 
-	file_put_contents('../../admin/includes/conn.php', $adminconfig1);
-	file_put_contents('../../admin/includes/configp.php', $adminconfig2);
-	
-	echo "Success!<br>";
-	flush();
 	//-----------------Create RPints User--------------------------
 	echo "Creating RPints database user...";
 	flush();
-	$con=mysqli_connect($servername,"root",$rootpass);
-	// Check connection
-
-	if (mysqli_connect_errno())
-	  {
-	  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	  }
 
 	$sql = "GRANT ALL ON *.* TO '" . $dbuser . "'@'" . $servername . "' IDENTIFIED BY '" . $dbpass1 . "' WITH GRANT OPTION;";
-	$result = mysqli_query($con,$sql);
-	mysqli_close($con);
+	$DB->execute($sql);
+
 	echo "Success!<br>";
 	flush();
 
@@ -156,23 +140,17 @@ require_once __DIR__.'/config_files.php';
 	flush();
 	$dbms_schema = "../../sql/schema.sql";
 
-		
+
 	$sql_query = @fread(@fopen($dbms_schema, 'r'), @filesize($dbms_schema)) or die('Cannot find SQL schema file. ');
-	
+
 	$sql_query = remove_remarks($sql_query);
 	$sql_query = remove_comments($sql_query);
 	$sql_query = split_sql_file($sql_query, ';');
 
+	foreach($sql_query as $sql)
+	{
 
-	mysql_connect($servername,'root',$rootpass) or die('error connection');
-
-	$i=1;
-	foreach($sql_query as $sql){
-	//echo $i++;
-	//echo "	";
-	//echo $sql;
-	//echo "<br>";
-	mysql_query($sql) or die('error in query');
+		$DB->execute($sql) or die('error in query');
 	}
 
 	echo "Success!<br>";
@@ -181,46 +159,43 @@ require_once __DIR__.'/config_files.php';
 	//-----------------Add the admin user to the Users DB----------
 	echo "Adding new admin user...";
 	flush();
-	$con=mysqli_connect($servername,"root",$rootpass,"raspberrypints");
-	// Check connection
-
-	if (mysqli_connect_errno())
-	  {
-	  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	  }
 	$currentdate = Date('Y-m-d H:i:s');
-	$sql = "INSERT INTO users (username, password, name, email, createdDate, modifiedDate) VALUES ('" . $adminuser . "','" . $adminhash . "','name','email','" . $currentdate . "','" . $currentdate . "');";
-	$result = mysqli_query($con,$sql);
-	mysqli_close($con);
+	$sql = "INSERT INTO users (username, password, name, email, createdDate, modifiedDate) VALUES (?, ?, ?, ?, ?, ?);";
+	$params = [
+		['type' => DB::BIND_TYPE_STRING, 'value' => $adminuser],
+		['type' => DB::BIND_TYPE_STRING, 'value' => $adminhash],
+		['type' => DB::BIND_TYPE_STRING, 'value' => 'name'],
+		['type' => DB::BIND_TYPE_STRING, 'value' => 'email'],
+		['type' => DB::BIND_TYPE_STRING, 'value' => $currentdate],
+		['type' => DB::BIND_TYPE_STRING, 'value' => $currentdate]
+	];
+
+	$DB->execute($sql, $params);
+
 	echo "Success!<br>";
 	flush();
 	//-----------------Load the sample data if requested-----------
 
-		if(!empty($_POST['sampledata'])) 
+		if(!empty($_POST['sampledata']))
 		{
 			echo "Adding sample data...";
 			flush();
-			
+
 			$dbms_schema = "../../sql/test_data.sql";
 
-		
+
 			$sql_query = @fread(@fopen($dbms_schema, 'r'), @filesize($dbms_schema)) or die('Cannot find SQL schema file. ');
-			
+
 			$sql_query = remove_remarks($sql_query);
 			$sql_query = remove_comments($sql_query);
 			$sql_query = split_sql_file($sql_query, ';');
 
-
-			mysql_connect($servername,'root',$rootpass) or die('error connection');
-
-			$i=1;
-			foreach($sql_query as $sql){
-			//echo $i++;
-			//echo "	";
-			mysql_query($sql) or die('error in query');
+			foreach($sql_query as $sql)
+			{
+				$DB->execute($sql) or die('error in query');
 			}
 
-			
+			mysqli_close($link);
 			echo "Success!<br>";
 			flush();
 		}

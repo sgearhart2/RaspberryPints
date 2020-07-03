@@ -43,11 +43,9 @@ class KegManager{
 		$sql = "SELECT * FROM kegs WHERE active = 1
 			AND kegStatusCode NOT IN (
 				'SERVING',
-				'SANITIZED',
 				'NEEDS_CLEANING',
 				'NEEDS_PARTS',
-				'NEEDS_REPAIRS',
-				'FLOODED'
+				'NEEDS_REPAIRS'
 			)
 		ORDER BY label";
 		$result = $DB->get($sql);

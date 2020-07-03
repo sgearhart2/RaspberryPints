@@ -10,7 +10,7 @@ class TapManager{
 	function Save(Tap $tap) {
 		$DB = DB::getInstance();
 
-		$sql = "UPDATE kegs k SET k.kegStatusCode = 'SERVING' where id = ?;";
+		$sql = "UPDATE kegs k SET k.kegStatusCode = 'SERVING', modifiedDate = NOW() where id = ?;";
 		$DB->execute($sql, [
 			['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_kegId()]
 		]);
@@ -21,12 +21,13 @@ class TapManager{
 		]);
 
 		if($tap->get_id()){
-			$sql = 	"UPDATE taps SET beerId = ?, kegId = ?, tapNumber = ?, ogAct = ?, fgAct = ?, srmAct = ?, ibuAct = ?, startAmount = ?, active = ?, modifiedDate = NOW() WHERE id = ?;";
+			$sql = 	"UPDATE taps SET beerId = ?, kegId = ?, tapNumber = ?, pinId = ?, ogAct = ?, fgAct = ?, srmAct = ?, ibuAct = ?, startAmount = ?, active = ?, modifiedDate = NOW() WHERE id = ?;";
 
 			$DB->execute($sql, [
 				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_beerId()],
 				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_kegId()],
 				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_tapNumber()],
+				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_pinId()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $tap->get_og()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $tap->get_fg()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $tap->get_srm()],
@@ -36,13 +37,14 @@ class TapManager{
 				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_id()]
 			]);
 		}else{
-			$sql = 	"INSERT INTO taps(beerId, kegId, tapNumber, ogAct, fgAct, srmAct, ibuAct, startAmount, currentAmount, active, createdDate, modifiedDate ) " .
-					"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+			$sql = 	"INSERT INTO taps(beerId, kegId, tapNumber, pinId, ogAct, fgAct, srmAct, ibuAct, startAmount, currentAmount, active, createdDate, modifiedDate ) " .
+					"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
 
 			$DB->execute($sql, [
 				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_beerId()],
 				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_kegId()],
 				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_tapNumber()],
+				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_pinId()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $tap->get_og()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $tap->get_fg()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $tap->get_srm()],
@@ -76,10 +78,15 @@ class TapManager{
 	function updateTapNumber($newTapNumber){
 		$DB = DB::getInstance();
 
-		$sql="UPDATE config SET configValue = ? WHERE configName = ?;";
+		$sql="UPDATE config SET configValue = ?, modifiedDate = NOW() WHERE configName = ?;";
 		$DB->execute($sql, [
 			['type' => DB::BIND_TYPE_INT, 'value' => $newTapNumber],
 			['type' => DB::BIND_TYPE_STRING, 'value' => ConfigNames::NumberOfTaps]
+		]);
+
+		$sql = "UPDATE kegs SET kegStatusCode = 'SANITIZED', modifiedDate = NOW() WHERE id in (SELECT kegId from Taps where tapNumber > ? AND active = 1)";
+		$DB->execute($sql, [
+			['type' => DB::BIND_TYPE_INT, 'value' => $newTapNumber],
 		]);
 
 		$sql="UPDATE taps SET active = 0, modifiedDate = NOW() WHERE active = 1 AND tapNumber > ?;";

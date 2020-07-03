@@ -178,7 +178,7 @@ if ($action == 'install')
 		['type' => DB::BIND_TYPE_STRING, 'value' => $adminuser],
 		['type' => DB::BIND_TYPE_STRING, 'value' => $adminhash],
 		['type' => DB::BIND_TYPE_STRING, 'value' => $adminname],
-		['type' => DB::BIND_TYPE_STRING, 'value' => $adminemail,
+		['type' => DB::BIND_TYPE_STRING, 'value' => $adminemail],
 		['type' => DB::BIND_TYPE_STRING, 'value' => $currentdate],
 		['type' => DB::BIND_TYPE_STRING, 'value' => $currentdate]
 	];
@@ -187,20 +187,19 @@ if ($action == 'install')
 
 	echo "Success!<br>";
 	flush();
-	
+
 	//-----------------Delete the index.html page-----------------
 	echo "Deleting default index.html page...";
 	flush();
-	if (!unlink("../../index.html"))
-	  {
-	  echo ("File already deleted");
-	  }
-	else
-	  {
+	if (file_exists("../../index.html")) {
+		unlink("../../index.html");
 	  echo ("Success!");
-	  }
+	}
+	else {
+	  echo ("File already deleted");
+	}
 	flush();
-	
+
 	//-----------------Load the sample data if requested-----------
 
 		if(!empty($_POST['sampledata']))

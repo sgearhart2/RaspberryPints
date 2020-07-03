@@ -66,7 +66,7 @@ include 'header.php';
 			$result = $DB->get(
 				"select configValue from config where configName = ?;",
 				[["type" => DB::BIND_TYPE_STRING, "value" => ConfigNames::HeaderText]]
-			)
+			);
 			$headerText= count($result) > 0 ? $result[0]['configValue'] : '';
 		?>
       <a name="header"></a>

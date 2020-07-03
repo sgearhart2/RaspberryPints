@@ -1,4 +1,6 @@
 <?php
+namespace RaspberryPints\Admin\Models;
+
 class Tap
 {
     private $_id;

@@ -94,6 +94,13 @@ IGNORE 1 ROWS
 (name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax)
 SET beerStyleGuidelineId = 2015, createdDate = NOW(), modifiedDate = NOW();
 
+LOAD DATA INFILE './data/beerStylesMiscellaneous.csv'
+INTO TABLE `beerStyles`
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+IGNORE 1 ROWS
+(name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax)
+SET beerStyleGuidelineId = 0, createdDate = NOW(), modifiedDate = NOW();
+
 -- --------------------------------------------------------
 
 --

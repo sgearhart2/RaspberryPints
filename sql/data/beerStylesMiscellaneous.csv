@@ -1,0 +1,9 @@
+name,catNum,category,ogMin,ogMax,fgMin,fgMax,abvMin,abvMax,ibuMin,ibuMax,srmMin,srmMax
+_Non-alcholic Beer,N/A,Non-alcoholic Beer,1,1,1,1,0,0,0,0,0,40
+_Non-beer: Wine,N/A,Wine,1,1,1,1,0,20,0,0,0,40
+_Non-beer: Kombucha,N/A,Kombucha,1,1,1,1,0,0,0,0,0,40
+_Non-beer: Tea,N/A,Tea,1,1,1,1,0,0,0,0,0,40
+_Non-beer: Coffee,N/A,Coffee,1,1,1,1,0,0,0,0,0,40
+_Non-beer: Fruit Juice,N/A,Fruit Juice,1,1,1,1,0,0,0,0,0,40
+_Non-beer: Fruit Drink,N/A,Fruit Drink,1,1,1,1,0,0,0,0,0,40
+_Non-beer: Seltzer Water,N/A,Seltzer Water,1,1,1,1,0,0,0,0,0,40

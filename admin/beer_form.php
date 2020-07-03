@@ -3,14 +3,13 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
-require_once __DIR__.'/../includes/config_names.php';
+use RaspberryPints\ConfigNames;
+use RaspberryPints\Admin\Models\Beer;
+use RaspberryPints\Admin\Managers\BeerManager;
+use RaspberryPints\Admin\Managers\BeerStyleManager;
+
 require_once __DIR__.'/includes/html_helper.php';
 require_once __DIR__.'/includes/functions.php';
-
-require_once __DIR__.'/includes/models/beer.php';
-
-require_once __DIR__.'/includes/managers/beer_manager.php';
-require_once __DIR__.'/includes/managers/beerStyle_manager.php';
 
 $htmlHelper = new HtmlHelper();
 $beerManager = new BeerManager();

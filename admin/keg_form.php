@@ -3,7 +3,8 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
-require_once '../includes/config_names.php';
+use RaspberryPints\ConfigNames;
+
 require_once 'includes/html_helper.php';
 require_once 'includes/functions.php';
 

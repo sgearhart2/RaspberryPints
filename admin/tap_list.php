@@ -4,16 +4,15 @@ if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
 
+use RaspberryPints\Admin\Managers\BeerManager;
+use RaspberryPints\Admin\Managers\KegManager;
+use RaspberryPints\Admin\Managers\TapManager;
+use RaspberryPints\Admin\Models\Tap;
+use RaspberryPints\Admin\Models\Beer;
+use RaspberryPints\Admin\Models\Keg;
+
 require_once __DIR__.'/includes/functions.php';
 require_once __DIR__.'/includes/html_helper.php';
-
-require_once __DIR__.'/includes/models/tap.php';
-require_once __DIR__.'/includes/models/beer.php';
-require_once __DIR__.'/includes/models/keg.php';
-
-require_once __DIR__.'/includes/managers/beer_manager.php';
-require_once __DIR__.'/includes/managers/keg_manager.php';
-require_once __DIR__.'/includes/managers/tap_manager.php';
 
 
 $htmlHelper = new HtmlHelper();

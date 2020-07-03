@@ -3,19 +3,18 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
-require_once __DIR__.'/../includes/config_names.php';
+use RaspberryPints\ConfigNames;
+use RaspberryPints\Admin\Managers\BeerManager;
+use RaspberryPints\Admin\Managers\KegManager;
+use RaspberryPints\Admin\Managers\KegTypeManager;
+use RaspberryPints\Admin\Managers\TapManager;
+use RaspberryPints\Admin\Models\Tap;
+use RaspberryPints\Admin\Models\Beer;
+use RaspberryPints\Admin\Models\Keg;
+use RaspberryPints\Admin\Models\KegTyep;
+
 require_once __DIR__.'/includes/html_helper.php';
 require_once __DIR__.'/includes/functions.php';
-
-require_once __DIR__.'/includes/models/tap.php';
-require_once __DIR__.'/includes/models/beer.php';
-require_once __DIR__.'/includes/models/keg.php';
-require_once __DIR__.'/includes/models/kegType.php';
-
-require_once __DIR__.'/includes/managers/beer_manager.php';
-require_once __DIR__.'/includes/managers/keg_manager.php';
-require_once __DIR__.'/includes/managers/kegType_manager.php';
-require_once __DIR__.'/includes/managers/tap_manager.php';
 
 $htmlHelper = new HtmlHelper();
 $tapManager = new TapManager();

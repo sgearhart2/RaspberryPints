@@ -4,8 +4,8 @@ if(!isset( $_SESSION['myusername'] )){
 header("location:index.php");
 }
 
-require '../includes/config_names.php';
-require_once '../includes/DB.php';
+use RaspberryPints\ConfigNames;
+use RaspberryPints\DB;
 
 ?>
 

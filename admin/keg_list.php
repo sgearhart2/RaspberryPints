@@ -4,17 +4,16 @@ if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
 
-require_once __DIR__.'/../includes/config_names.php';
+use RaspberryPints\ConfigNames;
+use RaspberryPints\Admin\Managers\KegManager;
+use RaspberryPints\Admin\Managers\KegStatusManager;
+use RaspberryPints\Admin\Managers\KegTypeManager;
+use RaspberryPints\Admin\Models\Keg;
+use RaspberryPints\Admin\Models\KegType;
+use RaspberryPints\Admin\Models\KegStatus;
+
 require_once __DIR__.'/includes/html_helper.php';
 require_once __DIR__.'/includes/functions.php';
-
-require_once __DIR__.'/includes/models/keg.php';
-require_once __DIR__.'/includes/models/kegType.php';
-require_once __DIR__.'/includes/models/kegStatus.php';
-
-require_once __DIR__.'/includes/managers/keg_manager.php';
-require_once __DIR__.'/includes/managers/kegStatus_manager.php';
-require_once __DIR__.'/includes/managers/kegType_manager.php';
 
 $htmlHelper = new HtmlHelper();
 $kegManager = new KegManager();

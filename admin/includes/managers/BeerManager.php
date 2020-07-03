@@ -7,47 +7,56 @@ use RaspberryPints\DB;
 class BeerManager{
 
 	function Save($beer){
-		$sql = "";
-		if($beer->get_id()){
+		$DB = DB:getInstance();
 
+		if($beer->get_id()) {
 			$sql = 	"UPDATE beers " .
 					"SET " .
-						"name = '" . encode($beer->get_name()) . "', " .
-						"beerStyleId = '" . encode($beer->get_beerStyleId()) . "', " .
-						"notes = '" . encode($beer->get_notes()) . "', " .
-						"ogEst = '" . $beer->get_og() . "', " .
-						"fgEst = '" . $beer->get_fg() . "', " .
-						"srmEst = '" . $beer->get_srm() . "', " .
-						"ibuEst = '" . $beer->get_ibu() . "', " .
+						"name = ?" .
+						"beerStyleId = ?, " .
+						"notes = ?, " .
+						"ogEst = ?, " .
+						"fgEst = ?, " .
+						"srmEst = ?, " .
+						"ibuEst = ?, " .
 						"modifiedDate = NOW() ".
-					"WHERE id = " . $beer->get_id();
+					"WHERE id = ?";
+			$DB->execute($sql, [
+				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_name())],
+				['type' => DB::BIND_TYPE_INT, 'value' => encode($beer->get_beerStyleId())],
+				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_notes())],
+				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_og()],
+				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_fg()],
+				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_srm()],
+				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_ibu()],
+				['type' => DB::BIND_TYPE_INT, 'value' => $beer->get_id()]
+			])
 
-		}else{
-			$sql = 	"INSERT INTO beers(name, beerStyleId, notes, ogEst, fgEst, srmEst, ibuEst, createdDate, modifiedDate ) " .
-					"VALUES(" .
-					"'" . encode($beer->get_name()) . "', " .
-					$beer->get_beerStyleId() . ", " .
-					"'" . encode($beer->get_notes()) . "', " .
-					"'" . $beer->get_og() . "', " .
-					"'" . $beer->get_fg() . "', " .
-					"'" . $beer->get_srm() . "', " .
-					"'" . $beer->get_ibu() . "' " .
-					", NOW(), NOW())";
 		}
-
-		//echo $sql; exit();
-
-		mysql_query($sql);
+		else{
+			$sql = 	"INSERT INTO beers(name, beerStyleId, notes, ogEst, fgEst, srmEst, ibuEst, createdDate, modifiedDate ) " .
+					"VALUES(?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+			$DB->execute($sql, [
+				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_name())],
+				['type' => DB::BIND_TYPE_INT, 'value' => $beer->get_beerStyleId()],
+				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_notes())],
+				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_og()],
+				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_fg()],
+				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_srm()],
+				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_ibu()]
+			])
+		}
 	}
 
 	function GetAll(){
-		$sql="SELECT * FROM beers ORDER BY name";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM beers ORDER BY name";
+		$result = $DB->get($sql);
 
 		$beers = array();
-		while($i = mysql_fetch_array($qry)){
+		foreach($result as $i => $row){
 			$beer = new Beer();
-			$beer->setFromArray($i);
+			$beer->setFromArray($row);
 			$beers[$beer->get_id()] = $beer;
 		}
 
@@ -55,13 +64,14 @@ class BeerManager{
 	}
 
 	function GetAllActive(){
-		$sql="SELECT * FROM beers WHERE active = 1 ORDER BY name";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM beers WHERE active = 1 ORDER BY name";
+		$result = $DB->get($sql);
 
 		$beers = array();
-		while($i = mysql_fetch_array($qry)){
+		foreach($result as $i => $row){
 			$beer = new Beer();
-			$beer->setFromArray($i);
+			$beer->setFromArray($row);
 			$beers[$beer->get_id()] = $beer;
 		}
 
@@ -69,12 +79,15 @@ class BeerManager{
 	}
 
 	function GetById($id){
-		$sql="SELECT * FROM beers WHERE id = $id";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM beers WHERE id = ?";
+		$result = $DB->get($sql, [
+			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+		]);
 
-		if( $i = mysql_fetch_array($qry) ){
+		foreach($result as $i => $row){
 			$beer = new Beer();
-			$beer->setFromArray($i);
+			$beer->setFromArray($row);
 			return $beer;
 		}
 
@@ -82,17 +95,21 @@ class BeerManager{
 	}
 
 	function Inactivate($id){
-		$sql = "SELECT * FROM taps WHERE beerId = $id AND active = 1";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM taps WHERE beerId = ? AND active = 1";
+		$result = $DB->get($sql, [
+			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+		]);
 
-		if( mysql_fetch_array($qry) ){
+		if(count($result) > 0 ){
 			$_SESSION['errorMessage'] = "Beer is associated with an active tap and could not be deleted.";
 			return;
 		}
 
-		$sql="UPDATE beers SET active = 0 WHERE id = $id";
-		//echo $sql; exit();
-		$qry = mysql_query($sql);
+		$sql = "UPDATE beers SET active = 0 WHERE id = ?";
+		 $DB->execute($sql, [
+			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+		]);
 
 		$_SESSION['successMessage'] = "Beer successfully deleted.";
 	}

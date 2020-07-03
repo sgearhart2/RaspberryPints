@@ -7,13 +7,14 @@ use RaspberryPints\Admin\Models\KegStatus;
 class KegStatusManager{
 
 	function GetAll(){
-		$sql="SELECT * FROM kegStatuses ORDER BY name";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM kegStatuses ORDER BY name";
+		$result = $DB->get($sql);
 
 		$kegStatuses = array();
-		while($i = mysql_fetch_array($qry)){
+		foreach($result as $i => $row){
 			$kegStatus = new KegStatus();
-			$kegStatus->setFromArray($i);
+			$kegStatus->setFromArray($row);
 			$kegStatuses[$kegStatus->get_code()] = $kegStatus;
 		}
 
@@ -21,12 +22,16 @@ class KegStatusManager{
 	}
 
 	function GetByCode($code){
-		$sql="SELECT * FROM kegStatuses WHERE code = '$code'";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM kegStatuses WHERE code = ?";
+		$result = $DB->get($sql, [
+			['type' => DB:BIND_TYPE_STRING, 'value' => $code]
+		]);
 
-		if( $i = mysql_fetch_array($qry) ){
+
+		if(count($result) == 1)
 			$kegStatus = new KegStatus();
-			$kegStatus->setFromArray($i);
+			$kegStatus->setFromArray($result[0]);
 			return $kegStatus;
 		}
 

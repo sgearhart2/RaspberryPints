@@ -7,28 +7,30 @@ use RaspberryPints\Admin\Models\KegType;
 class KegTypeManager{
 
 	function GetAll(){
-		$sql="SELECT * FROM kegTypes ORDER BY displayName";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM kegTypes ORDER BY displayName";
+		$result = $DB->get($sql);
 
 		$kegTypes = array();
-		while($i = mysql_fetch_array($qry)){
+		foreach($result as $i => $row){
 			$kegType = new KegType();
-			$kegType->setFromArray($i);
+			$kegType->setFromArray($row);
 			$kegTypes[$kegType->get_id()] = $kegType;
 		}
 
 		return $kegTypes;
 	}
 
-
-
 	function GetById($id){
-		$sql="SELECT * FROM kegTypes WHERE id = $id";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM kegTypes WHERE id = ?";
+		$result = $DB->get($sql, [
+			['type' => DB:BIND_TYPE_STRING, 'value' => $id]
+		]);
 
-		if( $i = mysql_fetch_array($qry) ){
+		if(count($result) == 1)
 			$kegType = new KegType();
-			$kegType->setFromArray($i);
+			$kegType->setFromArray($result[0]);
 			return $kegType;
 		}
 

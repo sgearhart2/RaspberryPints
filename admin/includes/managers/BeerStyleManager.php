@@ -28,9 +28,9 @@ class BeerStyleManager{
 			['type' => DB:BIND_TYPE_INT, 'value' => $id]
 		]);
 
-		foreach($result as $i => $row){
+		if(count($result) == 1)
 			$beerStyle = new beerStyle();
-			$beerStyle->setFromArray($row);
+			$beerStyle->setFromArray($result[0]);
 			return $beerStyle;
 		}
 

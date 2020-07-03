@@ -23,15 +23,14 @@ class BeerManager{
 					"WHERE id = ?";
 			$DB->execute($sql, [
 				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_name())],
-				['type' => DB::BIND_TYPE_INT, 'value' => encode($beer->get_beerStyleId())],
+				['type' => DB::BIND_TYPE_INT, 'value' => $beer->get_beerStyleId()],
 				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_notes())],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_og()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_fg()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_srm()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_ibu()],
 				['type' => DB::BIND_TYPE_INT, 'value' => $beer->get_id()]
-			])
-
+			]);
 		}
 		else{
 			$sql = 	"INSERT INTO beers(name, beerStyleId, notes, ogEst, fgEst, srmEst, ibuEst, createdDate, modifiedDate ) " .
@@ -44,7 +43,7 @@ class BeerManager{
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_fg()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_srm()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_ibu()]
-			])
+			]);
 		}
 	}
 
@@ -85,9 +84,9 @@ class BeerManager{
 			['type' => DB:BIND_TYPE_INT, 'value' => $id]
 		]);
 
-		foreach($result as $i => $row){
+		if(count($result) == 1)
 			$beer = new Beer();
-			$beer->setFromArray($row);
+			$beer->setFromArray($result[0]);
 			return $beer;
 		}
 
@@ -107,7 +106,7 @@ class BeerManager{
 		}
 
 		$sql = "UPDATE beers SET active = 0 WHERE id = ?";
-		 $DB->execute($sql, [
+		$DB->execute($sql, [
 			['type' => DB:BIND_TYPE_INT, 'value' => $id]
 		]);
 

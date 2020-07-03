@@ -8,13 +8,14 @@ use RaspberryPints\Admin\Models\Keg;
 class KegManager{
 
 	function GetAll(){
-		$sql="SELECT * FROM kegs ORDER BY label";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM kegs ORDER BY label";
+		$result = $DB->get($sql);
 
 		$kegs = array();
-		while($i = mysql_fetch_array($qry)){
+		foreach($result as $i => $row){
 			$keg = new Keg();
-			$keg->setFromArray($i);
+			$keg->setFromArray($row);
 			$kegs[$keg->get_id()] = $keg;
 		}
 
@@ -22,13 +23,14 @@ class KegManager{
 	}
 
 	function GetAllActive(){
-		$sql="SELECT * FROM kegs WHERE active = 1 ORDER BY label";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM kegs WHERE active = 1 ORDER BY label";
+		$result = $DB->get($sql);
 
 		$kegs = array();
-		while($i = mysql_fetch_array($qry)){
+		foreach($result as $i => $row){
 			$keg = new Keg();
-			$keg->setFromArray($i);
+			$keg->setFromArray($row);
 			$kegs[$keg->get_id()] = $keg;
 		}
 
@@ -36,20 +38,24 @@ class KegManager{
 	}
 
 	function GetAllAvailable(){
-		$sql="SELECT * FROM kegs WHERE active = 1
-			AND kegStatusCode != 'SERVING'
-			AND kegStatusCode != 'SANITIZED'
-			AND kegStatusCode != 'NEEDS_CLEANING'
-			AND kegStatusCode != 'NEEDS_PARTS'
-			AND kegStatusCode != 'NEEDS_REPAIRS'
-			AND kegStatusCode != 'FLOODED'
+		$DB = DB:getInstance();
+
+		$sql = "SELECT * FROM kegs WHERE active = 1
+			AND kegStatusCode NOT IN (
+				'SERVING',
+				'SANITIZED',
+				'NEEDS_CLEANING',
+				'NEEDS_PARTS',
+				'NEEDS_REPAIRS',
+				'FLOODED'
+			)
 		ORDER BY label";
-		$qry = mysql_query($sql);
+		$result = $DB->get($sql);
 
 		$kegs = array();
-		while($i = mysql_fetch_array($qry)){
+		foreach($result as $i => $row){
 			$keg = new Keg();
-			$keg->setFromArray($i);
+			$keg->setFromArray($row);
 			$kegs[$keg->get_id()] = $keg;
 		}
 
@@ -57,12 +63,15 @@ class KegManager{
 	}
 
 	function GetById($id){
-		$sql="SELECT * FROM kegs WHERE id = $id";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM kegs WHERE id = ?";
+		$result = $DB->get($sql, [
+			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+		]);
 
-		if( $i = mysql_fetch_array($qry) ){
+		if(count($result) == 1){
 			$keg = new Keg();
-			$keg->setFromArray($i);
+			$keg->setFromArray($result[0]);
 			return $keg;
 		}
 
@@ -71,57 +80,71 @@ class KegManager{
 
 
 	function Save($keg){
+		$DB = DB:getInstance();
 		$sql = "";
 		if($keg->get_id()){
 			$sql = 	"UPDATE kegs " .
 					"SET " .
-						"label = '" . $keg->get_label() . "', " .
-						"kegTypeId = " . $keg->get_kegTypeId() . ", " .
-						"make = '" . $keg->get_make() . "', " .
-						"model = '" . $keg->get_model() . "', " .
-						"serial = '" . $keg->get_serial() . "', " .
-						"stampedOwner = '" . $keg->get_stampedOwner() . "', " .
-						"stampedLoc = '" . $keg->get_stampedLoc() . "', " .
-						"weight = '" . $keg->get_weight() . "', " .
-						"notes = '" . $keg->get_notes() . "', " .
-						"kegStatusCode = '" . $keg->get_kegStatusCode() . "', " .
+						"label = ?, " .
+						"kegTypeId = ?, " .
+						"make = ?, " .
+						"model = ?, " .
+						"serial = ?, " .
+						"stampedOwner = ?, " .
+						"stampedLoc = ?, " .
+						"weight = ?, " .
+						"notes = ?, " .
+						"kegStatusCode = ?, " .
 						"modifiedDate = NOW() ".
-					"WHERE id = " . $keg->get_id();
-
-		}else{
-			$sql = 	"INSERT INTO kegs(label, kegTypeId, make, model, serial, stampedOwner, stampedLoc, weight, notes, kegStatusCode, createdDate, modifiedDate ) " .
-					"VALUES(" .
-						"'". $keg->get_label() . "', " .
-						$keg->get_kegTypeId() . ", " .
-						"'". $keg->get_make() . "', " .
-						"'". $keg->get_model() . "', " .
-						"'". $keg->get_serial() . "', " .
-						"'". $keg->get_stampedOwner() . "', " .
-						"'". $keg->get_stampedLoc() . "', " .
-						"'". $keg->get_weight() . "', " .
-						"'". $keg->get_notes() . "', " .
-						"'". $keg->get_kegStatusCode() . "', " .
-						"NOW(), NOW())";
+					"WHERE id = ?";
+			$DB->execute($sql, [
+				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_label()],
+				['type' => DB::BIND_TYPE_INT, 'value' => $keg->get_kegTypeId()],
+				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_make()],
+				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_model()],
+				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_serial()],
+				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_stampedOwner()],
+				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_stampedLoc()],
+				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $keg->get_weight()],
+				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_notes()],
+				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_kegStatusCode()]
+			]);
 		}
-
-		//echo $sql; exit();
-
-		mysql_query($sql);
+		else
+		{
+			$sql = 	"INSERT INTO kegs(label, kegTypeId, make, model, serial, stampedOwner, stampedLoc, weight, notes, kegStatusCode, createdDate, modifiedDate ) " .
+					"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+				$DB->execute($sql, [
+					['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_label()],
+					['type' => DB::BIND_TYPE_INT, 'value' => $keg->get_kegTypeId()],
+					['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_make()],
+					['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_model()],
+					['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_serial()],
+					['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_stampedOwner()],
+					['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_stampedLoc()],
+					['type' => DB::BIND_TYPE_DOUBLE, 'value' => $keg->get_weight()],
+					['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_notes()],
+					['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_kegStatusCode()]
+				]);
+		}
 	}
 
 	function Inactivate($id){
-		$sql = "SELECT * FROM taps WHERE kegId = $id AND active = 1";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM taps WHERE kegId = ? AND active = 1";
+		$result = $DB->get($sql, [
+			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+		]);
 
-		if( mysql_fetch_array($qry) ){
+		if( count($result) > 0 ){
 			$_SESSION['errorMessage'] = "Keg is associated with an active tap and could not be deleted.";
 			return;
 		}
 
-		$sql="UPDATE kegs SET active = 0 WHERE id = $id";
-		//echo $sql; exit();
-
-		$qry = mysql_query($sql);
+		$sql = "UPDATE kegs SET active = 0 WHERE id = ?";
+		$DB->execute($sql, [
+			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+		]);
 
 		$_SESSION['successMessage'] = "Keg successfully deleted.";
 	}

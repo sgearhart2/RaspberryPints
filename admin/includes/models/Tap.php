@@ -9,6 +9,7 @@ class Tap implements JsonSerializable
   private $_beerId;
   private $_kegId;
 	private $_tapNumber;
+	private $_pinId;
 	private $_og;
 	private $_fg;
 	private $_srm;
@@ -33,6 +34,9 @@ class Tap implements JsonSerializable
 	public function get_tapNumber(){ return $this->_tapNumber; }
 	public function set_tapNumber($_tapNumber){ $this->_tapNumber = $_tapNumber; }
 
+	public function get_pinId() { return $this->_pinId; }
+	public function set_pinId($_pinId){ $this->_pinId = $_pinId; }
+	
 	public function get_og(){ return $this->_og; }
 	public function set_og($_og){ $this->_og = $_og; }
 
@@ -82,6 +86,11 @@ class Tap implements JsonSerializable
 		else
 			$this->set_tapNumber(null);
 
+		if( isset($postArr['pinId']) )
+			$this->set_pinId($postArr['pinId']);
+		else
+			$this->set_pinId('0');
+			
 		if( isset($postArr['og']) )
 			$this->set_og($postArr['og']);
 		else if( isset($postArr['ogAct']) )
@@ -151,6 +160,7 @@ class Tap implements JsonSerializable
       'beerId' => $this->get_beerId(),
       'kegId' => $this->get_kegId(),
       'tapNumber' => $this->get_tapNumber(),
+      'pinId' => $this->get_pinId(),
       'og' => $this->get_og(),
       'fg' => $this->get_fg(),
       'srm' => $this->get_srm(),

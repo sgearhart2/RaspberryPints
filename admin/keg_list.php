@@ -47,18 +47,18 @@ include 'header.php';
 ?>
 	<!-- End Header -->
 
-    <!-- Top Breadcrumb Start -->
-    <div id="breadcrumb">
+	<!-- Top Breadcrumb Start -->
+	<div id="breadcrumb">
     	<ul>
-        	<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
-        	<li><strong>Location:</strong></li>
+			<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
+			<li><strong>Location:</strong></li>
             <li class="current">Keg List</li>
-        </ul>
-    </div>
+		</ul>
+	</div>
     <!-- Top Breadcrumb End -->
 
-    <!-- Right Side/Main Content Start -->
-    <div id="rightside">
+	<!-- Right Side/Main Content Start -->
+	<div id="rightside">
 		<div class="contentcontainer lg left">
 			<div class="headings alt">
 				<h2>Keg List</h2>
@@ -150,20 +150,20 @@ include 'header.php';
 			<?php $htmlHelper->ShowMessage(); ?>
 			<br/><br/>
 			<input type="submit" class="btn" value="Add a Keg" onclick="window.location='keg_form.php'" />
+				<!-- Start Footer -->   
+<?php
+include 'footer.php';
+?>
+	<!-- End Footer -->
 		</div>
 	</div>
 
 	<!-- End On Tap Section -->
 
-    <!-- Start Footer -->
-<?php
-include 'footer.php';
-?>
 
-	<!-- End Footer -->
 
-    </div>
-    <!-- Right Side/Main Content End -->
+	</div>
+	<!-- Right Side/Main Content End -->
 	<!-- Start Left Bar Menu -->
 <?php
 include 'left_bar.php';
@@ -184,11 +184,11 @@ include 'scripts.php';
 </script>
 
 	<!-- End Js -->
-    <!--[if IE 6]>
-    <script type='text/javascript' src='scripts/png_fix.js'></script>
-    <script type='text/javascript'>
-      DD_belatedPNG.fix('img, .notifycount, .selected');
-    </script>
+	<!--[if IE 6]>
+	<script type='text/javascript' src='scripts/png_fix.js'></script>
+	<script type='text/javascript'>
+	DD_belatedPNG.fix('img, .notifycount, .selected');
+	</script>
     <![endif]-->
 </body>
 </html>

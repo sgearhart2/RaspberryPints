@@ -21,6 +21,8 @@ $adminuser = $_POST["adminuser"];
 $adminpass1 = $_POST["adminpass1"];
 $adminpass2 = $_POST["adminpass2"];
 $action = $_POST["selectaction"];
+$adminname = $_POST["adminname"];
+$adminemail = $_POST["adminemail"];
 
 //Create the MD5 hash value for the admin password
 $adminhash = md5($adminpass1);
@@ -70,7 +72,7 @@ echo "Checking config folder permissions...";
 flush();
 if (!is_writable(dirname('../../includes/functions.php')))
 {
-   $validerror .= "<br><strong>Cannot write the configuration files. Please check the /includes/ folder permissions. See the RPints Installation page on www.raspberrypints.com.</strong>";
+$validerror .= "<br><strong>Cannot write the configuration files. Please check the /includes/ folder permissions. See the RPints Installation page on www.raspberrypints.com.</strong>";
 }
 
 echo "Checking includes/db.ini permissions...";
@@ -87,7 +89,7 @@ $validerror .= "<br><strong>Cannot write the configuration files. Please check t
 echo "Success!<br>";
 flush();
 
-  //##TODO## Check if administrator account already exists
+//##TODO## Check if administrator account already exists
 
 
 
@@ -100,7 +102,7 @@ if ($validerror !='')
 		echo "</body></html>";
 		die();
 	}
-
+// CLEAR INSTALLATION DATA ROUTINES
 if ($action == 'remove')
 {
 	echo "Deleting raspberrypints database...";
@@ -175,8 +177,8 @@ if ($action == 'install')
 	$params = [
 		['type' => DB::BIND_TYPE_STRING, 'value' => $adminuser],
 		['type' => DB::BIND_TYPE_STRING, 'value' => $adminhash],
-		['type' => DB::BIND_TYPE_STRING, 'value' => 'name'],
-		['type' => DB::BIND_TYPE_STRING, 'value' => 'email'],
+		['type' => DB::BIND_TYPE_STRING, 'value' => $adminname],
+		['type' => DB::BIND_TYPE_STRING, 'value' => $adminemail,
 		['type' => DB::BIND_TYPE_STRING, 'value' => $currentdate],
 		['type' => DB::BIND_TYPE_STRING, 'value' => $currentdate]
 	];
@@ -185,6 +187,20 @@ if ($action == 'install')
 
 	echo "Success!<br>";
 	flush();
+	
+	//-----------------Delete the index.html page-----------------
+	echo "Deleting default index.html page...";
+	flush();
+	if (!unlink("../../index.html"))
+	  {
+	  echo ("File already deleted");
+	  }
+	else
+	  {
+	  echo ("Success!");
+	  }
+	flush();
+	
 	//-----------------Load the sample data if requested-----------
 
 		if(!empty($_POST['sampledata']))
@@ -216,8 +232,8 @@ if ($action != 'remove')
 {
 	##TODO## Add better error handling before showing the Success message
 	echo '<br /><br /><br /><h3> Congratulations! Your Raspberry Pints has been setup successfully.<br />';
-	echo 'Tap List - <a href="http://' . $_SERVER['HTTP_HOST'] . '/index.php">http://' . $_SERVER['HTTP_HOST'] . '/index.php</a><br />';
-	echo 'Administration - <a href="http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php">http://' . $_SERVER['HTTP_HOST'] . '/admin/index.php</a><br />';
+	echo 'Click for - <a href="../../index.php">Tap List</a><br />';
+	echo 'Click for - <a href="../../admin/index.php">Administration </a><br />';
 }
 
 ?>

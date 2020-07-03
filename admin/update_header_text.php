@@ -4,6 +4,7 @@ if(!isset( $_SESSION['myusername'] )){
   header("location:index.php");
 }
 use RaspberryPints\ConfigNames;
+require_once 'includes/functions.php';
 
 // Get values from form
 $header_text = $_POST['header_text'];

@@ -37,30 +37,30 @@ include 'header.php';
 ?>
 	<!-- End Header -->
 
-    <!-- Top Breadcrumb Start -->
-    <div id="breadcrumb">
+	<!-- Top Breadcrumb Start -->
+	<div id="breadcrumb">
     	<ul>
-        	<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
-        	<li><strong>Location:</strong></li>
-            <li class="current">My Account</li>
-        </ul>
-    </div>
+			<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
+			<li><strong>Location:</strong></li>
+			<li class="current">My Account</li>
+		</ul>
+	</div>
     <!-- Top Breadcrumb End -->
 
-    <!-- Right Side/Main Content Start -->
-    <div id="rightside">
+	<!-- Right Side/Main Content Start -->
+	<div id="rightside">
 
 
 		<div class="contentcontainer med left">
-            <div class="headings alt">
-                <h2>Account Info</h2>
-            </div>
-            <div class="contentbox">
+			<div class="headings alt">
+				<h2>Account Info</h2>
+			</div>
+			<div class="contentbox">
 			<p style="padding:0px;margin:0px">
- <font size="2" Color="Black" font-family="Impact">Name:</font>
+<font size="2" Color="Black" font-family="Impact">Name:</font>
  <?= $user['name']?>
  <br />
- <font size="2" Color="Black" font-family="Impact">Username:</font>
+<font size="2" Color="Black" font-family="Impact">Username:</font>
  <?= $user['username']?>
 <br />
 <font size="2" Color="Black" font-family="Impact"> Email:</font>
@@ -68,7 +68,7 @@ include 'header.php';
 <br />
 <br />
 
-     </div>
+	</div>
 
     <!-- Start Footer -->
 <?php
@@ -76,9 +76,9 @@ include 'footer.php';
 ?>
 
 	<!-- End Footer -->
-           </div>
-    </div>
-    <!-- Right Side/Main Content End -->
+		</div>
+	</div>
+	<!-- Right Side/Main Content End -->
 
 	<!-- Start Left Bar Menu -->
 <?php
@@ -90,11 +90,11 @@ include 'left_bar.php';
 include 'scripts.php';
 ?>
 	<!-- End Js -->
-    <!--[if IE 6]>
-    <script type='text/javascript' src='scripts/png_fix.js'></script>
-    <script type='text/javascript'>
-      DD_belatedPNG.fix('img, .notifycount, .selected');
-    </script>
+	<!--[if IE 6]>
+	<script type='text/javascript' src='scripts/png_fix.js'></script>
+	<script type='text/javascript'>
+	DD_belatedPNG.fix('img, .notifycount, .selected');
+	</script>
     <![endif]-->
 </body>
 </html>

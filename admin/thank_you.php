@@ -23,29 +23,29 @@ include 'header.php';
 ?>
 	<!-- End Header -->
 
-    <!-- Top Breadcrumb Start -->
-    <div id="breadcrumb">
+	<!-- Top Breadcrumb Start -->
+	<div id="breadcrumb">
     	<ul>
-        	<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
-        	<li><strong>Location:</strong></li>
-            <li class="current">Thank_You</li>
-        </ul>
-    </div>
-    <!-- Top Breadcrumb End -->
+			<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
+			<li><strong>Location:</strong></li>
+			<li class="current">Thank_You</li>
+		</ul>
+	</div>
+	<!-- Top Breadcrumb End -->
 
-    <!-- Right Side/Main Content Start -->
-    <div id="rightside">
+	<!-- Right Side/Main Content Start -->
+	<div id="rightside">
 
 
-		 <div class="contentcontainer med left">
-            <div class="headings alt">
-                <h2>We Received Your Email</h2>
-            </div>
-            <div class="contentbox">
+		<div class="contentcontainer med left">
+			<div class="headings alt">
+				<h2>We Received Your Email</h2>
+			</div>
+			<div class="contentbox">
 			<p>
 Thank you for your assistance in making Raspberry pints a better tool!
-            </div>
-        </div>
+			</div>
+		</div>
     <!-- Start Footer -->
 <?php
 include 'footer.php';
@@ -53,8 +53,8 @@ include 'footer.php';
 
 	<!-- End Footer -->
 
-    </div>
-    <!-- Right Side/Main Content End -->
+	</div>
+	<!-- Right Side/Main Content End -->
 
 	<!-- Start Left Bar Menu -->
 <?php
@@ -66,11 +66,11 @@ include 'left_bar.php';
 include 'scripts.php';
 ?>
 	<!-- End Js -->
-    <!--[if IE 6]>
-    <script type='text/javascript' src='scripts/png_fix.js'></script>
-    <script type='text/javascript'>
-      DD_belatedPNG.fix('img, .notifycount, .selected');
-    </script>
+	<!--[if IE 6]>
+	<script type='text/javascript' src='scripts/png_fix.js'></script>
+	<script type='text/javascript'>
+	DD_belatedPNG.fix('img, .notifycount, .selected');
+	</script>
     <![endif]-->
 </body>
 </html>

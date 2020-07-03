@@ -57,19 +57,19 @@ include 'header.php';
 ?>
 	<!-- End Header -->
 
-    <!-- Top Breadcrumb Start -->
-    <div id="breadcrumb">
+	<!-- Top Breadcrumb Start -->
+	<div id="breadcrumb">
     	<ul>
-        	<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
-        	<li><strong>Location:</strong></li>
+			<li><img src="img/icons/icon_breadcrumb.png" alt="Location" /></li>
+			<li><strong>Location:</strong></li>
             <li class="current">Tap List</li>
-        </ul>
-    </div>
+		</ul>
+	</div>
     <!-- Top Breadcrumb End -->
 
-    <!-- Right Side/Main Content Start -->
-    <div id="rightside">
-		 <div class="contentcontainer med left">
+	<!-- Right Side/Main Content Start -->
+	<div id="rightside">
+		<div class="contentcontainer med left">
 	<p>
 	<!-- Set Tap Number Form -->
 		<form method="POST" name="taplimit">
@@ -102,7 +102,7 @@ include 'header.php';
 			<form method="POST">
 				<input type="hidden" name="numberOfTaps" value="<?php echo $numberOfTaps ?>" />
 
-				<table width="950" border="0" cellspacing="0" cellpadding="0">
+				<table width="800" border="0" cellspacing="0" cellpadding="0">
 					<thead>
 						<tr>
 							<th>Tap #</th>
@@ -112,8 +112,9 @@ include 'header.php';
 							<th>OG</th>
 							<th>FG</th>
 							<th>Keg</th>
-							<th>Start Amount</th>
-							<th>Current Amount</th>
+							<th>PIN</th>
+							<!-- <th>Start Amount</th> -->
+							<!-- <th>Current Amount</th> -->
 							<th colspan="3"></th>
 						</tr>
 					</thead>
@@ -157,12 +158,19 @@ include 'header.php';
 											</td>
 
 											<td>
+												<?php echo $tap->get_pinId() ?>
+											</td>
+											<!--
+											<td>
 												<?php echo $tap->get_startAmount() ?>
 											</td>
+											-->
 
+											<!--
 											<td>
 												<?php echo $tap->get_currentAmount() ?>
 											</td>
+											-->
 
 											<td>
 												<input name="editTap" type="submit" class="btn" value="Update Tap Info" />
@@ -201,7 +209,7 @@ include 'header.php';
 
 			</form>
 		<?php } ?>
-    </div>
+	</div>
 	<!-- End On Tap Section -->
 
     <!-- Start Footer -->
@@ -211,8 +219,8 @@ include 'footer.php';
 
 	<!-- End Footer -->
 
-    </div>
-    <!-- Right Side/Main Content End -->
+	</div>
+	<!-- Right Side/Main Content End -->
 	<!-- Start Left Bar Menu -->
 <?php
 include 'left_bar.php';
@@ -223,11 +231,11 @@ include 'left_bar.php';
 include 'scripts.php';
 ?>
 	<!-- End Js -->
-    <!--[if IE 6]>
-    <script type='text/javascript' src='scripts/png_fix.js'></script>
-    <script type='text/javascript'>
-      DD_belatedPNG.fix('img, .notifycount, .selected');
-    </script>
+	<!--[if IE 6]>
+	<script type='text/javascript' src='scripts/png_fix.js'></script>
+	<script type='text/javascript'>
+	DD_belatedPNG.fix('img, .notifycount, .selected');
+	</script>
     <![endif]-->
 </body>
 </html>

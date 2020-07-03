@@ -9,6 +9,7 @@ class BeerManager{
 	function Save($beer){
 		$sql = "";
 		if($beer->get_id()){
+
 			$sql = 	"UPDATE beers " .
 					"SET " .
 						"name = '" . encode($beer->get_name()) . "', " .

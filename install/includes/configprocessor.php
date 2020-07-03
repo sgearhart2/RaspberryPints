@@ -52,12 +52,13 @@ $rootDbInfo = [
 	'user' => "root",
 	'password' => $rootpass
 ];
-require_once("../../includes/DB.php");
+use RaspberryPints\DB;
+
 try {
 	$DB = DB::getInstance($rootDbInfo);
 }
 catch(Exception $ex) {
-	$validerror .= "<br><strong>Cannot connect the the database using the supplied information.</strong>";
+	$validerror .= "<br><strong>Cannot connect the the database using the supplied information. Error message : \"" . $ex->getMessage() . "\"</strong>";
 }
 
 echo "Success!<br>";
@@ -120,6 +121,9 @@ if ($action == 'remove')
 if ($action == 'install')
 {
 
+	//-----------------Create apache .htaccess----------------
+	include "create_htaccess.php";
+	
 	//-----------------Create the db.ini file-----------------
 	include "create_db_ini.php";
 
@@ -147,6 +151,11 @@ if ($action == 'install')
 
 	foreach($sql_query as $sql)
 	{
+		// Trim whitespace from statement
+		$sql = trim($sql);
+		// replace relative paths for load files with absolute path based on script location
+		$sql = preg_replace("/(LOAD DATA INFILE ')\./i", "$1" . __DIR__ . "/../../sql", $sql);
+
 		$DB->execute($sql) or die("error in query : $sql");
 	}
 

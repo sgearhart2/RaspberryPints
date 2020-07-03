@@ -3,6 +3,8 @@ namespace RaspberryPints;
 
 use \mysqli;
 use \mysqli_stmt;
+use \mysqli_result;
+use \Exception;
 
 // Using Singleton pattern to use one connection throughout the request lifecycle
 // https://phpenthusiast.com/blog/the-singleton-design-pattern-in-php
@@ -63,10 +65,14 @@ class DB {
     return $results;
   }
 
-  public function execute(string $sql, array $bindVariables = []) : bool {
+  public function execute(string $sql, array $bindVariables = []) {
     // if no bind variables, just execute the query without creating a statement
     if(count($bindVariables) == 0) {
-      return $this->conn->query($sql);
+      $result = $this->conn->query($sql);
+      if($result == false) {
+        throw new Exception('Error "' . $this->conn->error . '" in query "' . $sql . '".');
+      }
+      return $result;
     }
     $stmt = $this->prepareStatement($sql, $bindVariables);
 

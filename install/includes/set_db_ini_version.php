@@ -1,8 +1,9 @@
 <?php
 global $validerror;
 
+use \RaspberryPints\DB;
+
 require_once 'install_functions.php';
-require_once "../../includes/DB.php";
 
 echo "Set version in db.ini file...";
 flush();
@@ -17,7 +18,7 @@ if(file_exists(__DIR__."/../../includes/db.ini")) {
     $version = $result[0]['configValue'];
 
     $dbIni = parse_ini_file(__DIR__."/../../includes/db.ini");
-    $dbIni['config']['version'] = $version;
+    $dbIni['version'] = $version;
 
     file_put_contents('../../includes/db.ini', create_ini_string($dbIni));
   }

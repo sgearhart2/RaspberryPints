@@ -10,15 +10,11 @@ echo "Update db.ini file...";
 flush();
 
 $dbIniSettings = [
-  'database connection info' => [
-    'server' => $servername,
-    'user' => $dbuser,
-    'password' => $dbpass1,
-    'db' => 'raspberrypints'
-  ],
-  'config' => [
-    'version' => ''
-  ]
+  'server' => $servername,
+  'user' => $dbuser,
+  'password' => $dbpass1,
+  'db' => 'raspberrypints',
+  'version' => ''
 ];
 
 file_put_contents('../../includes/db.ini', create_ini_string($dbIniSettings));

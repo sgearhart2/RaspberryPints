@@ -47,6 +47,8 @@
      <form action="includes/configprocessor.php" method="post">
 
 	<?php
+		use RaspberryPints\DB;
+
 		if (file_exists("../includes/db.ini")) {
 		echo 'We noticed that you already have installed RPints. Please select an option from the menu below';
 			//Check versions
@@ -62,10 +64,10 @@
 
 			$dbversion = $result[0]['configValue'];
 
-			$dbIniSettings = parse_ini_file(__DIR__."../includes/db.ini");
+			$dbIniSettings = parse_ini_file(__DIR__."/../includes/db.ini");
 
 			echo '<br><select name="selectaction">';
-			if ($dbversion != $dbIniSettings['config']['version']) {
+			if ($dbversion != $dbIniSettings['version']) {
 				echo '<option value="upgrade">Upgrade</option>';
 			}
 			echo '<option value="remove">Clear Data</option>';
@@ -101,7 +103,7 @@ you are certain you need to change it.
 	<br>
 	<h3>Step<span class="tapcircle">2</span></h3>
 		Now it's time to create the database user for Raspberry Pints to use. The default is "beers" and you can keep the default if you would like.
-		This database account is just used by the software to access the database. This is not your administration account.
+		This database account is just d by the software to access the database. This is not your administration account.
 		<table>
 			<tr>
 				<td>

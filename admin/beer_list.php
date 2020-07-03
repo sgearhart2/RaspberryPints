@@ -72,10 +72,12 @@ include 'header.php';
 			<table width="770px" border="0" cellspacing="0" cellpadding="0">
 				<thead>
 					<tr>
-						<th width="28%">Name</th>
-						<th width="10%">Vitals</th>
+						<th width="75%">Name</th>
+						<th width="25%">Vitals</th>
+						<!--
 						<th width="22%">Yeast/Water/etc</th>
 						<th width="40%" colspan="3">Hop Additions</th>
+						-->
 					</tr>
 				</thead>
 				<tbody>
@@ -123,7 +125,7 @@ include 'header.php';
 												echo ""
 										?>
 									</td>
-
+									<!--
 									<td>
 										<b>Yeast</b>: Fermentis S-04<br>
 										<b>Water:</b> Sacramento, CA<br>
@@ -136,7 +138,7 @@ include 'header.php';
 										2.14 oz Nelson Sauvin (9.1%) @ 30 min<br>
 										2.41 oz Columbus/Tomahawk (8.6%) @ 15 min<br>
 										1.24 oz East Kent Goldings (2.1%) @ 0 min<br>
-									</td>
+									</td>-->
 								</tr>
 								<tr class="intborder">
 									<td colspan="3">

@@ -4,17 +4,15 @@ if(!isset( $_SESSION['myusername'] )){
 	header("location:index.php");
 }
 use RaspberryPints\ConfigNames;
+use RaspberryPints\Admin\Models\Keg;
+use RaspberryPints\Admin\Models\KegType;
+use RaspberryPints\Admin\Models\KegStatus;
+use RaspberryPints\Admin\Managers\KegManager;
+use RaspberryPints\Admin\Managers\KegStatusManager;
+use RaspberryPints\Admin\Managers\KegTypeManager;
 
 require_once 'includes/html_helper.php';
 require_once 'includes/functions.php';
-
-require_once 'includes/models/keg.php';
-require_once 'includes/models/kegType.php';
-require_once 'includes/models/kegStatus.php';
-
-require_once 'includes/managers/keg_manager.php';
-require_once 'includes/managers/kegStatus_manager.php';
-require_once 'includes/managers/kegType_manager.php';
 
 $htmlHelper = new HtmlHelper();
 $kegManager = new KegManager();
@@ -148,7 +146,7 @@ include 'header.php';
 					Notes:
 				</td>
 				<td>
-					<textarea id="notes" class="text-input textarea" name="notes" style="width:500px;height:100px"><?php echo $keg->get_stampedOwner() ?></textarea>
+					<textarea id="notes" class="text-input textarea" name="notes" style="width:500px;height:100px"><?php echo $keg->get_notes() ?></textarea>
 				</td>
 			</tr>
 			<tr>

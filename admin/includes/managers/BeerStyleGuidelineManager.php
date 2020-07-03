@@ -2,18 +2,18 @@
 namespace RaspberryPints\Admin\Managers;
 
 use RaspberryPints\DB;
-use RaspberryPints\Admin\Models\BeerStyle;
+use RaspberryPints\Admin\Models\BeerStyleGuideline;
 
-class BeerStyleManager{
+class BeerStyleGuidelineManager{
 
 	function GetAll(){
 		$DB = DB::getInstance();
-		$sql = "SELECT * FROM beerStyles ORDER BY name";
+		$sql = "SELECT * FROM beerStyleGuidelines ORDER BY id asc";
 		$result = $DB->get($sql);
 
 		$beerStyles = array();
 		foreach($result as $i => $row){
-			$beerStyle = new BeerStyle();
+			$beerStyle = new BeerStyleGuideline();
 			$beerStyle->setFromArray($row);
 			$beerStyles[$beerStyle->get_id()] = $beerStyle;
 		}
@@ -23,13 +23,13 @@ class BeerStyleManager{
 
 	function GetById($id){
 		$DB = DB::getInstance();
-		$sql = "SELECT * FROM beerStyles WHERE id = ?";
+		$sql = "SELECT * FROM beerStyleGuidelines WHERE id = $id";
 		$result = $DB->get($sql, [
 			['type' => DB::BIND_TYPE_INT, 'value' => $id]
 		]);
 
 		if(count($result) == 1) {
-			$beerStyle = new BeerStyle();
+			$beerStyle = new BeerStyleGuideline();
 			$beerStyle->setFromArray($result[0]);
 			return $beerStyle;
 		}

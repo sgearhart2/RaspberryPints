@@ -54,7 +54,7 @@ SET createdDate = NOW(), modifiedDate = NOW();
 
 CREATE TABLE IF NOT EXISTS `beerStyles` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`beerStyleGuidelinesId` int(4) NOT NULL,
+	`beerStyleGuidelineId` int(4) NOT NULL,
 	`name` tinytext NOT NULL,
 	`catNum` tinytext NOT NULL,
 	`category` tinytext NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `beerStyles` (
 	`modifiedDate` TIMESTAMP NULL,
 
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`beerStyleGuidelinesId`) REFERENCES beerStyleGuidelines(`id`) ON DELETE CASCADE
+	FOREIGN KEY (`beerStyleGuidelineId`) REFERENCES beerStyleGuidelines(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB	DEFAULT CHARSET=latin1;
 commit;
 --
@@ -85,14 +85,14 @@ INTO TABLE `beerStyles`
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 ROWS
 (name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax)
-SET beerStyleGuidelinesId = 2008, createdDate = NOW(), modifiedDate = NOW();
+SET beerStyleGuidelineId = 2008, createdDate = NOW(), modifiedDate = NOW();
 
 LOAD DATA INFILE './data/beerStyles2015BJCP.csv'
 INTO TABLE `beerStyles`
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 ROWS
 (name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax)
-SET beerStyleGuidelinesId = 2015, createdDate = NOW(), modifiedDate = NOW();
+SET beerStyleGuidelineId = 2015, createdDate = NOW(), modifiedDate = NOW();
 
 -- --------------------------------------------------------
 

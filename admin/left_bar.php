@@ -49,11 +49,14 @@
 			<li><a href="personalize.php#header" title="personalize">Headers</a></li>
 			<li><a href="personalize.php#logo" title="personalize">Brewery Logo</a></li>
 			<li><a href="personalize.php#background" title="personalize">Background Image</a></li>
+			<!--
 			<li><a href="#" title="theme">Themes <small>(coming v3.0.0)</small></a></li>
 			<li><a href="#" title="drinker-acct">Drinker Accounts <small>(coming v2.0.0)</small></a></li>
 			<li><a href="#" title="personalize">Units of Measure <small>(coming v3.0.0)</small></a></li>
+			-->
 		</ul>
 	</li>
+	<!--
 	<li>
 		<a class="collapsed heading">Advanced Hardware</a>
 		<ul class="navigation">
@@ -76,10 +79,13 @@
 			<li><a href="#" title="GPT">Tap statistics <small>(coming v2.0.0+)</small></a></li>
 		</ul>
 	</li>
+	-->
 	<li>
 		<a class="expanded heading">Help</a>
 		<ul class="navigation">
+			<!--
 			<li><a href="#" title="faq">F.A.Q. <small>(coming soon)</small></a></li>
+			--->
 			<li><a href="report_bug.php" title="faq">Report a Bug</a></li>
 			<li><a href="feedback.php" title="faq">Request a Feature</a></li>
 		</ul>
@@ -87,10 +93,14 @@
 	<li>
 		<a class="expanded heading">Everything Else</a>
 		<ul class="navigation">
+			<!--
 			<li><a href="http://www.raspberrypints.com/" target="_blank" title="faq">Official Website <small>(coming soon)</small></a></li>
 			<li><a href="#" title="about">About <small>(coming soon)</small></a></li>
+			-->
 			<li><a href="contributors.php" title="contributors">Contributors</a></li>
+			<!--
 			<li><a href="#" title="licensing">Licensing <small>(coming soon)</small></a></li>
+			-->
 		</ul>
 	</li>
 </ul>

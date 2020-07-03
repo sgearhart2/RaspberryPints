@@ -1,10 +1,13 @@
 <?php
 namespace RaspberryPints\Admin\Models;
 
-class BeerStyle
+use \JsonSerializable;
+
+class BeerStyle implements JsonSerializable
 {
-    private $_id;
-    private $_name;
+  private $_id;
+  private $_name;
+  private $_beerStyleGuidelineId;
 	private $_catNum;
 	private $_category;
 	private $_createdDate;
@@ -18,6 +21,9 @@ class BeerStyle
 	public function get_name(){ return $this->_name; }
 	public function set_name($_name){ $this->_name = $_name; }
 
+  public function get_beerStyleGuidelineId(){ return $this->_beerStyleGuidelineId; }
+  public function set_beerStyleGuidelineId($_beerStyleGuidelineId){ $this->_beerStyleGuidelineId = $_beerStyleGuidelineId; }
+
 	public function get_catNum(){ return $this->_catNum; }
 	public function set_catNum($_catNum){ $this->_catNum = $_catNum; }
 
@@ -30,8 +36,8 @@ class BeerStyle
 	public function get_modifiedDate(){ return $this->_modifiedDate; }
 	public function set_modifiedDate($_modifiedDate){ $this->_modifiedDate = $_modifiedDate; }
 
-    public function setFromArray($postArr)
-    {
+  public function setFromArray($postArr)
+  {
 		if( isset($postArr['id']) )
 			$this->set_id($postArr['id']);
 		else
@@ -43,6 +49,11 @@ class BeerStyle
 			$this->set_name($postArr['displayName']);
 		else
 			$this->set_name(null);
+
+    if( isset($postArr['beerStyleGuidelineId']))
+      $this->set_beerStyleGuidelineId($postArr['beerStyleGuidelineId']);
+    else
+      $this->set_beerStyleGuidelineId(null);
 
 		if( isset($postArr['catNum']) )
 			$this->set_catNum($postArr['catNum']);
@@ -63,16 +74,20 @@ class BeerStyle
 			$this->set_modifiedDate($postArr['modifiedDate']);
 		else
 			$this->set_modifiedDate(null);
-    }
+  }
 
-	function toJson(){
-		return "{" .
-			"id: " . $this->get_id() . ", " .
-			"name: '" . $this->get_name() . "', " .
-			"catNum: '" . $this->get_catNum() . "', " .
-			"category: '" . $this->get_category() . "', " .
-			"createdDate: new Date('" . $this->get_createdDate() . "'), " .
-			"modifiedDate: new Date('" . $this->get_modifiedDate() . "') " .
-		"}";
+	public function jsonSerialize()
+  {
+    $arr = [
+      'id' => $this->get_id(),
+      'name' => $this->get_name(),
+      'beerStyleGuidelineId' => $this->get_beerStyleGuidelineId(),
+      'catNum' => $this->get_catNum(),
+      'category' => $this->get_category(),
+      'createdDate' => $this->get_createdDate(),
+      'modifiedDate' => $this->get_modifiedDate()
+    ];
+
+    return $arr;
 	}
 }

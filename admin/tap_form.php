@@ -200,7 +200,7 @@ include 'scripts.php';
 	$(function() {
 		var beerList = {
 			<?php foreach($beerList as $beerItem){
-				echo $beerItem->get_id() . ": " . $beerItem->toJson() . ", ";
+				echo $beerItem->get_id() . ": " . json_encode($beerItem) . ", ";
 			} ?>
 		};
 

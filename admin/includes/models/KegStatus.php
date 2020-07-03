@@ -1,10 +1,12 @@
 <?php
 namespace RaspberryPints\Admin\Models;
 
-class KegStatus
+use \JsonSerializable;
+
+class KegStatus implements JsonSerializable
 {
-    private $_code;
-    private $_name;
+  private $_code;
+  private $_name;
 	private $_createdDate;
 	private $_modifiedDate;
 
@@ -22,8 +24,8 @@ class KegStatus
 	public function get_modifiedDate(){ return $this->_modifiedDate; }
 	public function set_modifiedDate($_modifiedDate){ $this->_modifiedDate = $_modifiedDate; }
 
-    public function setFromArray($postArr)
-    {
+  public function setFromArray($postArr)
+  {
 		if( isset($postArr['code']) )
 			$this->set_code($postArr['code']);
 		else
@@ -43,14 +45,17 @@ class KegStatus
 			$this->set_modifiedDate($postArr['modifiedDate']);
 		else
 			$this->set_modifiedDate(null);
-    }
+  }
 
-	function toJson(){
-		return "{" .
-			"code: " . $this->get_code() . ", " .
-			"name: '" . $this->get_name() . "', " .
-			"createdDate: new Date('" . $this->get_createdDate() . "'), " .
-			"modifiedDate: new Date('" . $this->get_modifiedDate() . "') " .
-		"}";
+  public function jsonSerialize()
+  {
+    $arr = [
+      'code' => $this->get_code(),
+      'name' => $this->get_name(),
+      'createdDate' => $this->get_createdDate(),
+      'modifiedDate' => $this->get_modifiedDate()
+    ];
+
+    return $arr;
 	}
 }

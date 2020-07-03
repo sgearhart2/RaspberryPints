@@ -1,10 +1,12 @@
 <?php
 namespace RaspberryPints\Admin\Models;
 
-class Keg
+use \JsonSerializable;
+
+class Keg implements JsonSerializable
 {
-    private $_id;
-    private $_label;
+  private $_id;
+  private $_label;
 	private $_kegTypeId;
 	private $_make;
 	private $_model;
@@ -62,8 +64,8 @@ class Keg
 	public function get_modifiedDate(){ return $this->_modifiedDate; }
 	public function set_modifiedDate($_modifiedDate){ $this->_modifiedDate = $_modifiedDate; }
 
-    public function setFromArray($postArr)
-    {
+  public function setFromArray($postArr)
+  {
 		if( isset($postArr['id']) )
 			$this->set_id($postArr['id']);
 		else
@@ -133,24 +135,26 @@ class Keg
 			$this->set_modifiedDate($postArr['modifiedDate']);
 		else
 			$this->set_modifiedDate(null);
-    }
+  }
 
-	function toJson(){
-		return "{" .
-			"id: " . $this->get_id() . ", " .
-			"label: " . $this->get_label() . ", " .
-			"kegTypeId: " . $this->get_kegTypeId() . ", " .
-			"make: " . $this->get_maked() . ", " .
-			"model: " . $this->get_model() . ", " .
-			"serial: " . $this->get_serial() . ", " .
-			"stampedOwner: " . $this->get_stampedOwner() . ", " .
-			"stampedLoc: " . $this->get_stampedLoc() . ", " .
-			"weight: " . $this->get_weight() . ", " .
-			"notes: " . $this->get_notes() . ", " .
-			"kegStatusCode: " . $this->get_kegStatusCode() . ", " .
-			"active: '" . $this->get_active() . "', " .
-			"createdDate: new Date('" . $this->get_createdDate() . "'), " .
-			"modifiedDate: new Date('" . $this->get_modifiedDate() . "') " .
-		"}";
-	}
+  public function jsonSerialize()
+  {
+    $arr = [
+      'id' => $this->get_id(),
+      'label' => $this->get_label(),
+      'kegTypeId' => $this->get_kegTypeId(),
+      'make' => $this->get_maked(),
+      'model' => $this->get_model(),
+      'serial' => $this->get_serial(),
+      'stampedOwner' => $this->get_stampedOwner(),
+      'stampedLoc' => $this->get_stampedLoc(),
+      'weight' => $this->get_weight(),
+      'notes' => $this->get_notes(),
+      'kegStatusCode' => $this->get_kegStatusCode(),
+      'active' => $this->get_active(),
+      'createdDate' => $this->get_createdDate(),
+      'modifiedDate' => $this->get_modifiedDate()
+    ];
+
+    return $arr;
 }

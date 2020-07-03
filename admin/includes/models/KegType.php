@@ -1,10 +1,12 @@
 <?php
 namespace RaspberryPints\Admin\Models;
 
-class KegType
+use \JsonSerializable;
+
+class KegType implements JsonSerializable
 {
-    private $_id;
-    private $_name;
+  private $_id;
+  private $_name;
 	private $_maxAmount;
 	private $_createdDate;
 	private $_modifiedDate;
@@ -26,8 +28,8 @@ class KegType
 	public function get_modifiedDate(){ return $this->_modifiedDate; }
 	public function set_modifiedDate($_modifiedDate){ $this->_modifiedDate = $_modifiedDate; }
 
-    public function setFromArray($postArr)
-    {
+  public function setFromArray($postArr)
+  {
 		if( isset($postArr['id']) )
 			$this->set_id($postArr['id']);
 		else
@@ -54,15 +56,18 @@ class KegType
 			$this->set_modifiedDate($postArr['modifiedDate']);
 		else
 			$this->set_modifiedDate(null);
-    }
+  }
 
-	function toJson(){
-		return "{" .
-			"id: " . $this->get_id() . ", " .
-			"name: '" . $this->get_name() . "', " .
-			"maxAmount: " . $this->get_maxAmount() . ", " .
-			"createdDate: new Date('" . $this->get_createdDate() . "'), " .
-			"modifiedDate: new Date('" . $this->get_modifiedDate() . "') " .
-		"}";
+	public function jsonSerialize()
+  {
+    $arr = [
+      'id' => $this->get_id(),
+      'name' => $this->get_name(),
+      'maxAmount' => $this->get_maxAmount(),
+      'createdDate' => $this->get_createdDate(),
+      'modifiedDate' => $this->get_modifiedDate()
+    ];
+
+    return $arr;
 	}
 }

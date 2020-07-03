@@ -12,7 +12,7 @@ class BeerManager{
 		if($beer->get_id()) {
 			$sql = 	"UPDATE beers " .
 					"SET " .
-						"name = ?" .
+						"name = ?," .
 						"beerStyleId = ?, " .
 						"notes = ?, " .
 						"ogEst = ?, " .

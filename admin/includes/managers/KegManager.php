@@ -107,7 +107,8 @@ class KegManager{
 				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_stampedLoc()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $keg->get_weight()],
 				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_notes()],
-				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_kegStatusCode()]
+				['type' => DB::BIND_TYPE_STRING, 'value' => $keg->get_kegStatusCode()],
+				['type' => DB::BIND_TYPE_INT, 'value' => $keg->get_id()]
 			]);
 		}
 		else

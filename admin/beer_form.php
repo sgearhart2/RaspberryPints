@@ -5,8 +5,10 @@ if(!isset( $_SESSION['myusername'] )){
 }
 use RaspberryPints\ConfigNames;
 use RaspberryPints\Admin\Models\Beer;
+use RaspberryPints\Admin\Models\BeerStyleGuideline;
 use RaspberryPints\Admin\Managers\BeerManager;
 use RaspberryPints\Admin\Managers\BeerStyleManager;
+use RaspberryPints\Admin\Managers\BeerStyleGuidelineManager;
 
 require_once __DIR__.'/includes/html_helper.php';
 require_once __DIR__.'/includes/functions.php';
@@ -14,6 +16,7 @@ require_once __DIR__.'/includes/functions.php';
 $htmlHelper = new HtmlHelper();
 $beerManager = new BeerManager();
 $beerStyleManager = new BeerStyleManager();
+$beerStyleGuidelineManager = new BeerStyleGuidelineManager();
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,6 +33,15 @@ if( isset($_GET['id'])){
 }
 
 $beerStyleList = $beerStyleManager->GetAll();
+$filteredStylesList = [];
+$beerStyle = $beerStyleManager->GetById($beer->get_beerStyleId());
+foreach($beerStyleList as $beerStyle) {
+	if($beerStyle->get_beerStyleGuidelineId() == $beerStyle->get_beerStyleGuidelineId()) {
+		$filteredStylesList[] = $beerStyle;
+	}
+}
+$beerStyleGuidelineList = $beerStyleGuidelineManager->GetAll();
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -83,10 +95,18 @@ require __DIR__.'/header.php';
 			</tr>
 			<tr>
 				<td>
+					<b>Style Guideline:<font color="red">*</font></b>
+				</td>
+				<td>
+					<?php echo $htmlHelper->ToSelectList("beerStyleGuidelineId", $beerStyleGuidelineList, "name", "id", $beerStyle->get_beerStyleGuidelineId(), "Select One"); ?>
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<b>Style:<font color="red">*</font></b>
 				</td>
 				<td>
-					<?php echo $htmlHelper->ToSelectList("beerStyleId", $beerStyleList, "name", "id", $beer->get_beerStyleId(), "Select One"); ?>
+					<?php echo $htmlHelper->ToSelectList("beerStyleId", $filteredStylesList, "name", "id", $beer->get_beerStyleId(), "Select One"); ?>
 				</td>
 			</tr>
 			<tr>
@@ -176,6 +196,24 @@ require __DIR__.'/scripts.php';
 			og: { required: true, number: true },
 			fg: { required: true, number: true }
 		  }
+		});
+
+		var beerStyles = <?= json_encode($beerStyleList); ?>;
+
+		$('#beerStyleGuidelineId').on('change', function() {
+			$('#beerStyleId').empty();
+
+			var beerStyleGuidelineId = $('#beerStyleGuidelineId').val();
+
+			for(var beerStyleId in beerStyles) {
+				if(beerStyles[beerStyleId].beerStyleGuidelineId == beerStyleGuidelineId) {
+					$('#beerStyleId').append(
+						$('<option/>')
+							.attr('value', beerStyles[beerStyleId].id)
+							.text(beerStyles[beerStyleId].name)
+					);
+				}
+			}
 		});
 
 	});

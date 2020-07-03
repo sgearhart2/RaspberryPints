@@ -112,7 +112,7 @@ class TapManager{
 		foreach($result as $i => $row) {
 			$tap = new Tap();
 			$tap->setFromArray($row);
-			$taps[$tap->getNumber()] = $tap;
+			$taps[$tap->get_tapNumber()] = $tap;
 		}
 
 		return $taps;

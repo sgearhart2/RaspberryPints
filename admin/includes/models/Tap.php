@@ -1,11 +1,13 @@
 <?php
 namespace RaspberryPints\Admin\Models;
 
-class Tap
+use \JsonSerializable;
+
+class Tap implements JsonSerializable
 {
-    private $_id;
-    private $_beerId;
-    private $_kegId;
+  private $_id;
+  private $_beerId;
+  private $_kegId;
 	private $_tapNumber;
 	private $_og;
 	private $_fg;
@@ -58,8 +60,8 @@ class Tap
 	public function get_modifiedDate(){ return $this->_modifiedDate; }
 	public function set_modifiedDate($_modifiedDate){ $this->_modifiedDate = $_modifiedDate; }
 
-    public function setFromArray($postArr)
-    {
+  public function setFromArray($postArr)
+  {
 		if( isset($postArr['id']) )
 			$this->set_id($postArr['id']);
 		else
@@ -140,5 +142,26 @@ class Tap
 			$this->set_modifiedDate($postArr['modifiedDate']);
 		else
 			$this->set_modifiedDate(null);
-    }
+  }
+
+  public function jsonSerialize()
+  {
+    $arr = [
+      'id' => $this->get_id(),
+      'beerId' => $this->get_beerId(),
+      'kegId' => $this->get_kegId(),
+      'tapNumber' => $this->get_tapNumber(),
+      'og' => $this->get_og(),
+      'fg' => $this->get_fg(),
+      'srm' => $this->get_srm(),
+      'ibu' => $this->get_ibu(),
+      'startAmount' => $this->get_startAmount(),
+      'currentAmount' => $this->get_currentAmount(),
+      'active' => $this->get_active(),
+      'createdDate' => $this->get_createdDate(),
+      'modifiedDate' => $this->get_modifiedDate()
+    ];
+
+    return $arr;
+  }
 }

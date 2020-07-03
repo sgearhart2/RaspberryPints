@@ -1,4 +1,6 @@
 <?php
+namespace RaspberryPints;
+
 abstract class ConfigNames
 {
 	const ShowTapNumCol = 'showTapNumCol';

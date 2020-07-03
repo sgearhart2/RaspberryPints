@@ -1,9 +1,7 @@
 <?php
-	require_once __DIR__.'/includes/config_names.php';
-
-	require_once __DIR__.'/admin/includes/managers/tap_manager.php';
-
-	require_once __DIR__.'/includes/DB.php';
+	use RaspberryPints\DB;
+	use RaspberryPints\ConfigNames;
+	use RaspberryPints\Admin\Managers\TapManager;
 
 	//This can be used to choose between CSV or MYSQL DB
 	$db = true;

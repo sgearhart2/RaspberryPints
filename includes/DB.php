@@ -1,4 +1,9 @@
 <?php
+namespace RaspberryPints;
+
+use \mysqli;
+use \msyqli_stmt;
+
 // Using Singleton pattern to use one connection throughout the request lifecycle
 // https://phpenthusiast.com/blog/the-singleton-design-pattern-in-php
 
@@ -45,6 +50,7 @@ class DB {
 
     call_user_func_array([$stmt, 'bind_result'], $parameters);
 
+    $results = [];
     while(mysqli_stmt_fetch($stmt)) {
       $x = array();
 
@@ -67,7 +73,7 @@ class DB {
     return mysqli_stmt_execute($stmt);
   }
 
-  private function prepareStatement(string $sql, array $bindVariables) : mysqli_stmt {
+  private function prepareStatement(string $sql, array $bindVariables) : \mysqli_stmt {
       $stmt = mysqli_prepare($this->conn, $sql);
 
       if(count($bindVariables) > 0) {

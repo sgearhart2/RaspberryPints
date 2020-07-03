@@ -7,7 +7,7 @@ use RaspberryPints\DB;
 class BeerManager{
 
 	function Save($beer){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 
 		if($beer->get_id()) {
 			$sql = 	"UPDATE beers " .
@@ -48,7 +48,7 @@ class BeerManager{
 	}
 
 	function GetAll(){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM beers ORDER BY name";
 		$result = $DB->get($sql);
 
@@ -63,7 +63,7 @@ class BeerManager{
 	}
 
 	function GetAllActive(){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM beers WHERE active = 1 ORDER BY name";
 		$result = $DB->get($sql);
 
@@ -78,13 +78,13 @@ class BeerManager{
 	}
 
 	function GetById($id){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM beers WHERE id = ?";
 		$result = $DB->get($sql, [
-			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+			['type' => DB::BIND_TYPE_INT, 'value' => $id]
 		]);
 
-		if(count($result) == 1)
+		if(count($result) == 1) {
 			$beer = new Beer();
 			$beer->setFromArray($result[0]);
 			return $beer;
@@ -94,10 +94,10 @@ class BeerManager{
 	}
 
 	function Inactivate($id){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM taps WHERE beerId = ? AND active = 1";
 		$result = $DB->get($sql, [
-			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+			['type' => DB::BIND_TYPE_INT, 'value' => $id]
 		]);
 
 		if(count($result) > 0 ){
@@ -107,7 +107,7 @@ class BeerManager{
 
 		$sql = "UPDATE beers SET active = 0 WHERE id = ?";
 		$DB->execute($sql, [
-			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+			['type' => DB::BIND_TYPE_INT, 'value' => $id]
 		]);
 
 		$_SESSION['successMessage'] = "Beer successfully deleted.";

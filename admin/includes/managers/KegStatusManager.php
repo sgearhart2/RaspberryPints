@@ -7,7 +7,7 @@ use RaspberryPints\Admin\Models\KegStatus;
 class KegStatusManager{
 
 	function GetAll(){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM kegStatuses ORDER BY name";
 		$result = $DB->get($sql);
 
@@ -22,14 +22,14 @@ class KegStatusManager{
 	}
 
 	function GetByCode($code){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM kegStatuses WHERE code = ?";
 		$result = $DB->get($sql, [
-			['type' => DB:BIND_TYPE_STRING, 'value' => $code]
+			['type' => DB::BIND_TYPE_STRING, 'value' => $code]
 		]);
 
 
-		if(count($result) == 1)
+		if(count($result) == 1) {
 			$kegStatus = new KegStatus();
 			$kegStatus->setFromArray($result[0]);
 			return $kegStatus;

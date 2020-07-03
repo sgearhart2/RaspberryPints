@@ -8,7 +8,7 @@ use RaspberryPints\Admin\Models\Keg;
 class KegManager{
 
 	function GetAll(){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM kegs ORDER BY label";
 		$result = $DB->get($sql);
 
@@ -23,7 +23,7 @@ class KegManager{
 	}
 
 	function GetAllActive(){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM kegs WHERE active = 1 ORDER BY label";
 		$result = $DB->get($sql);
 
@@ -38,7 +38,7 @@ class KegManager{
 	}
 
 	function GetAllAvailable(){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 
 		$sql = "SELECT * FROM kegs WHERE active = 1
 			AND kegStatusCode NOT IN (
@@ -63,10 +63,10 @@ class KegManager{
 	}
 
 	function GetById($id){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM kegs WHERE id = ?";
 		$result = $DB->get($sql, [
-			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+			['type' => DB::BIND_TYPE_INT, 'value' => $id]
 		]);
 
 		if(count($result) == 1){
@@ -80,7 +80,7 @@ class KegManager{
 
 
 	function Save($keg){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "";
 		if($keg->get_id()){
 			$sql = 	"UPDATE kegs " .
@@ -130,10 +130,10 @@ class KegManager{
 	}
 
 	function Inactivate($id){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM taps WHERE kegId = ? AND active = 1";
 		$result = $DB->get($sql, [
-			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+			['type' => DB::BIND_TYPE_INT, 'value' => $id]
 		]);
 
 		if( count($result) > 0 ){
@@ -143,7 +143,7 @@ class KegManager{
 
 		$sql = "UPDATE kegs SET active = 0 WHERE id = ?";
 		$DB->execute($sql, [
-			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+			['type' => DB::BIND_TYPE_INT, 'value' => $id]
 		]);
 
 		$_SESSION['successMessage'] = "Keg successfully deleted.";

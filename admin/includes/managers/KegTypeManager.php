@@ -7,7 +7,7 @@ use RaspberryPints\Admin\Models\KegType;
 class KegTypeManager{
 
 	function GetAll(){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM kegTypes ORDER BY displayName";
 		$result = $DB->get($sql);
 
@@ -22,13 +22,13 @@ class KegTypeManager{
 	}
 
 	function GetById($id){
-		$DB = DB:getInstance();
+		$DB = DB::getInstance();
 		$sql = "SELECT * FROM kegTypes WHERE id = ?";
 		$result = $DB->get($sql, [
-			['type' => DB:BIND_TYPE_STRING, 'value' => $id]
+			['type' => DB::BIND_TYPE_STRING, 'value' => $id]
 		]);
 
-		if(count($result) == 1)
+		if(count($result) == 1) {
 			$kegType = new KegType();
 			$kegType->setFromArray($result[0]);
 			return $kegType;

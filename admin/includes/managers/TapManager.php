@@ -1,8 +1,6 @@
 <?php
 namespace RaspberryPints\Admin\Managers;
 
-namespace RaspberryPints\Admin\Managers;
-
 use RaspberryPints\ConfigNames;
 use RaspberryPints\DB;
 use RaspberryPints\Admin\Models\Tap;

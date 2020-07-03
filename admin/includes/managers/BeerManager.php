@@ -2,6 +2,7 @@
 namespace RaspberryPints\Admin\Managers;
 
 use RaspberryPints\Admin\Models\Beer;
+use RaspberryPints\DB;
 
 class BeerManager{
 

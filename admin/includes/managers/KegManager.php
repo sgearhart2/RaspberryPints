@@ -1,7 +1,9 @@
 <?php
 namespace RaspberryPints\Admin\Managers;
 
-require_once __DIR__.'/../models/keg.php';
+
+use RaspberryPints\DB;
+use RaspberryPints\Admin\Models\Keg;
 
 class KegManager{
 

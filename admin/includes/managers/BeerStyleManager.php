@@ -7,28 +7,30 @@ use RaspberryPints\Admin\Models\BeerStyle;
 class BeerStyleManager{
 
 	function GetAll(){
-		$sql="SELECT * FROM beerStyles ORDER BY name";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM beerStyles ORDER BY name";
+		$result = $DB->get($sql);
 
 		$beerStyles = array();
-		while($i = mysql_fetch_array($qry)){
+		foreach($result as $i => $row){
 			$beerStyle = new beerStyle();
-			$beerStyle->setFromArray($i);
+			$beerStyle->setFromArray($row);
 			$beerStyles[$beerStyle->get_id()] = $beerStyle;
 		}
 
 		return $beerStyles;
 	}
 
-
-
 	function GetById($id){
-		$sql="SELECT * FROM beerStyles WHERE id = $id";
-		$qry = mysql_query($sql);
+		$DB = DB:getInstance();
+		$sql = "SELECT * FROM beerStyles WHERE id = $id";
+		$result = $DB->get($sql, [
+			['type' => DB:BIND_TYPE_INT, 'value' => $id]
+		]);
 
-		if( $i = mysql_fetch_array($qry) ){
+		foreach($result as $i => $row){
 			$beerStyle = new beerStyle();
-			$beerStyle->setFromArray($i);
+			$beerStyle->setFromArray($row);
 			return $beerStyle;
 		}
 

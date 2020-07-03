@@ -3,6 +3,20 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 header("location:index.php");
 }
+
+use RaspberryPints\DB;
+$DB = DB::getInstance();
+
+$sql = "SELECT name, username, email FROM users WHERE username = ?";
+$result = $DB->get($sql, [
+  ['type' => DB::BIND_TYPE_STRING, 'value' => $_SESSION['myusername']]
+]);
+
+if(count($result) == 0) {
+  // user not found, redirect to login
+}
+
+$user = $result[0];
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -44,31 +58,13 @@ include 'header.php';
             <div class="contentbox">
 			<p style="padding:0px;margin:0px">
  <font size="2" Color="Black" font-family="Impact">Name:</font>
- <?php
-
-  $sql="SELECT `name` FROM `users` WHERE username='$_SESSION[myusername]'";
-  $result=mysql_query($sql);
-
-echo mysql_result($result, 0, 'name');
-?><br />
+ <?= $user['name']?>
+ <br />
  <font size="2" Color="Black" font-family="Impact">Username:</font>
-   <?php
-
-  $sql="SELECT `username` FROM `users` WHERE username='$_SESSION[myusername]'";
-$result=mysql_query($sql);
-
-echo mysql_result($result, 0, 'username');
-
-?><br />
+ <?= $user['username']?>
+<br />
 <font size="2" Color="Black" font-family="Impact"> Email:</font>
-  <?php
-
-  $sql="SELECT `email` FROM `users` WHERE username='$_SESSION[myusername]'";
-$result=mysql_query($sql);
-
-echo mysql_result($result, 0, 'email');
-
-?>
+<?= $user['name']?>
 <br />
 <br />
 

@@ -52,6 +52,7 @@ $rootDbInfo = [
 	'user' => "root",
 	'password' => $rootpass
 ];
+require '../../includes/DB.php';
 use RaspberryPints\DB;
 
 try {
@@ -123,7 +124,7 @@ if ($action == 'install')
 
 	//-----------------Create apache .htaccess----------------
 	include "create_htaccess.php";
-	
+
 	//-----------------Create the db.ini file-----------------
 	include "create_db_ini.php";
 

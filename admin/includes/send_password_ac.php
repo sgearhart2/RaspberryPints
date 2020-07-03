@@ -1,50 +1,44 @@
 <?
+use RaspberryPints\DB;
+
 // value sent from form
 $email_to=$_POST['email_to'];
 
-
-$sql="SELECT password FROM users WHERE email='$email_to'";
-$result=mysql_query($sql);
-
-// if found this e-mail address, row must be 1 row
-// keep value in variable name "$count"
-$count=mysql_num_rows($result);
-
+$DB = DB::getInstance();
+$sql = "SELECT password FROM users WHERE email=?";
+$result = $DB->get($sql, [
+  ['type' => DB::BIND_TYPE_STRING, 'value' => $email_to]
+]);
 // compare if $count =1 row
-if($count==1){
+if(count($result) == 1){
 
-$rows=mysql_fetch_array($result);
+  $your_password = $rows[0]['password'];
 
-$your_password=$rows['password'];
+  // ---------------- SEND MAIL FORM ----------------
 
-// ---------------- SEND MAIL FORM ----------------
+  // send e-mail to ...
+  $to = $email_to;
 
-// send e-mail to ...
-$to=$email_to;
+  // Your subject
+  $subject = "Your password here";
 
-// Your subject
-$subject="Your password here";
+  // From
+  $header = "from: Support";
 
-// From
-$header="from: Support";
+  // Your message
+  $messages .= "This is your password to your login( $your_password ) \r\n";
+  $messages .= "Please Purge this email and update the password within your admin panel after receiving this email. \r\n";
 
-// Your message
-$messages.="This is your password to your login( $your_password ) \r\n";
-$messages.="Please Purge this email and update the password within your admin panel after receiving this email. \r\n";
-
-// send email
-$sentmail = mail($to,$subject,$messages,$header);
+  // send email
+  $sentmail = mail($to,$subject,$messages,$header);
 
 }
 
 // else if $count not equal 1
 else {
-echo "We Can not find your email in our Database, please go back and retry.";
+  echo "We Can not find your email in our Database, please go back and retry.";
 }
 
-// if your email succesfully sent
-{
-echo "An email has been sent including the info you have requested.";?><a href="../index.php">Click Here<a/> to go back to the login.
-<?php
-}
+echo "An email has been sent including the info you have requested.";
 ?>
+<a href="../index.php">Click Here<a/> to go back to the login.

@@ -5,10 +5,21 @@
 <div id="welcome"> &nbsp; Welcome, <br />
 	&nbsp;
 	<?php
-		$sql="SELECT `name` FROM `users` WHERE username='$_SESSION[myusername]'";
-		$result=mysql_query($sql);
-		echo mysql_result($result, 0, 'name');
+		use RaspberryPints\DB;
+		$DB = DB::getInstance();
+
+		$sql = "SELECT name FROM users WHERE username = ?";
+		$result = $DB->get($sql, [
+		  ['type' => DB::BIND_TYPE_STRING, 'value' => $_SESSION['myusername']]
+		]);
+
+		if(count($result) == 0) {
+		  // user not found, redirect to login
+		}
+
+		$user = $result[0];
 	?>
+	<?= $user['name']?>
 </div>
 
 <!-- End User Echo -->
@@ -71,7 +82,7 @@
 			<li><a href="#" title="faq">F.A.Q. <small>(coming soon)</small></a></li>
 			<li><a href="report_bug.php" title="faq">Report a Bug</a></li>
 			<li><a href="feedback.php" title="faq">Request a Feature</a></li>
-		</ul>	
+		</ul>
 	</li>
 	<li>
 		<a class="expanded heading">Everything Else</a>
@@ -85,4 +96,4 @@
 </ul>
 
 <!-- End Navagation -->
-<!-- Left Dark Bar End --> 
+<!-- Left Dark Bar End -->

@@ -157,4 +157,6 @@ class Keg implements JsonSerializable
     ];
 
     return $arr;
+  }
 }
+?>

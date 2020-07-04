@@ -1,5 +1,5 @@
 <?php
-	if (!file_exists(__DIR__.'/includes/config.php')) {
+	if (!file_exists(__DIR__.'/includes/db.ini')) {
 		header('Location: install/index.php', true, 303);
 		die();
 	}
@@ -259,26 +259,33 @@
 
 								<?php if($config[ConfigNames::ShowKegCol]){ ?>
 									<td class="keg">
-										
-										
+
+
 										<h3><?php echo number_format((($beer['startAmount'] - $beer['remainAmount']) * 128)); ?> fl oz poured</h3>
 										<?php
+											$DB = DB::getInstance();
+
 											// Code for new kegs that are not full
-                                                                                        $tid = $beer['id'];
-                                                                                        $sql = "Select kegId from taps where id=".$tid." limit 1";
-                                                                                        $kegID = mysql_query($sql);
-                                                                                        $kegID = mysql_fetch_array($kegID);
-                                                                                        //echo $kegID[0];
-                                                                                        $sql = "SELECT `kegTypes`.`maxAmount` as kVolume FROM  `kegs`,`kegTypes` where  kegs.kegTypeId = kegTypes.id and kegs.id =".$kegID[0]."";
-                                                                                        $kvol = mysql_query($sql);
-                                                                                        $kvol = mysql_fetch_array($kvol);
-                                                                                        $kvol = $kvol[0];
-                                                                                        $kegImgClass = "";
-                                                                                        if ($beer['startAmount']>=$kvol) {
-                                                                                        $percentRemaining = $beer['remainAmount'] / $beer['startAmount'] * 100;
-                                                                                        } else {
-                                                                                        $percentRemaining =  $beer['remainAmount'] / $kvol * 100;
-                                                                                        }
+                      $tid = $beer['id'];
+                      $sql = "Select kegId from taps where id = ? limit 1";
+											$results = $DB->get($sql, [
+												['type' => DB::BIND_TYPE_INT, 'value' => $tid]
+											]);
+											$kegID = $results[0]['kegId'];
+                      //echo $kegID[0];
+                      $sql = "SELECT `kegTypes`.`maxAmount` as kVolume FROM  `kegs`,`kegTypes` where  kegs.kegTypeId = kegTypes.id and kegs.id = ?";
+                      $result = $DB->get($sql, [
+												['type' => DB::BIND_TYPE_INT, 'value' => $kegID]
+											]);
+                      $kvol = $kvol[0]['maxAmount'];
+                      $kegImgClass = "";
+
+											if ($beer['startAmount']>=$kvol) {
+                      	$percentRemaining = $beer['remainAmount'] / $beer['startAmount'] * 100;
+                      } else {
+                      	$percentRemaining =  $beer['remainAmount'] / $kvol * 100;
+                      }
+
 											if( $beer['remainAmount'] <= 0 ) {
 												$kegImgClass = "keg-empty";
 												$percentRemaining = 100; }
@@ -352,8 +359,8 @@
 
 										<h2></h2>
 									</td>
-								<?php } ?>								
-								
+								<?php } ?>
+
 								<?php if($config[ConfigNames::ShowKegCol]){ ?>
 									<td class="keg">
 										<h3></h3>

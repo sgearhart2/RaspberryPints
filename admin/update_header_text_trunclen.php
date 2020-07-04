@@ -3,19 +3,23 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
 header("location:index.php");
 }
-require 'includes/conn.php';
-require '../includes/config_names.php';
+use RaspberryPints\DB;
+use RaspberryPints\ConfigNames;
 
 
-// Get values from form 
+// Get values from form
 $header_text_trunclen=$_POST['header_text_trunclen'];
 
 
 
 
 // update data in mysql database
-$sql="UPDATE config SET configValue='$header_text_trunclen' WHERE configName ='headerTextTruncLen'";
-$result=mysql_query($sql);
+$DB = DB::getInstance();
+$sql = "UPDATE config SET configValue = ? WHERE configName = ?";
+$result = $DB->execute($sql, [
+  ['type' => DB::BIND_TYPE_STRING, 'value' => $header_text_trunclen ],
+  ['type' => DB::BIND_TYPE_STRING, 'value' => 'headerTextTruncLen']
+]);
 
 // if successfully updated.
 if($result){
@@ -28,4 +32,4 @@ else {
 echo "ERROR";
 }
 
-?> 
+?>

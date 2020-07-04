@@ -62,7 +62,7 @@ include 'header.php';
 
 		<hr />
 
-	<a name="header"></a> 
+	<a name="header"></a>
 		<h2>Taplist Header</h2><br><br>
 		<?php
 			$result = $DB->get(
@@ -73,21 +73,23 @@ include 'header.php';
 		?>
 		<p><b>Text to Display:</b></p>
 			<form method="post" action="update_header_text.php">
-				<input type="text" class="largebox" value="<?php echo $headerText['configValue']; ?>" name="header_text"> &nbsp 
+				<input type="text" class="largebox" value="<?php echo $headerText['configValue']; ?>" name="header_text"> &nbsp
 				<input type="submit" class="btn" name="Submit" value="Submit">
 			</form><br><br>
 		<?php
-			$sql="SELECT configValue FROM config WHERE configName ='".ConfigNames::HeaderTextTruncLen."'";
-			$result=mysql_query($sql);
-			$headerTextTruncLen=mysql_fetch_array($result);
+			$sql="SELECT configValue FROM config WHERE configName = ?";
+			$result = $DB->get($sql, [
+				['type' => DB::BIND_TYPE_STRING, 'value' => ConfigNames::HeaderTextTruncLen]
+			]);
+			$headerTextTruncLen = $result[0]['configValue'];
 		?>
 		<p><b>Truncate To:</b> (# characters)</p>
 			<form method="post" action="update_header_text_trunclen.php">
-				<input type="text" class="smallbox" value="<?php echo $headerTextTruncLen['configValue']; ?>" name="header_text_trunclen"> &nbsp 
+				<input type="text" class="smallbox" value="<?php echo $headerTextTruncLen['configValue']; ?>" name="header_text_trunclen"> &nbsp
 				<input type="submit" class="btn" name="Submit" value="Submit">
 			</form>
 		<hr />
-	<a name="logo"></a> 
+	<a name="logo"></a>
 		<h2>Taplist Logo</h2>
 		<p>This logo appears on the taplist.</p>
 			<b>Current image:</b><br /><br />

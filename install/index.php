@@ -88,7 +88,7 @@ you are certain you need to change it.
 	<table>
 			<tr>
 				<td>
-					<label for="textfield"><strong>Database Server: (required)</strong></label>
+					<label for="servername"><strong>Database Server: (required)</strong></label>
 				</td>
 				<td>
 					<input minlength="2" required class="inputbox" value="localhost" type="text" name="servername" required>
@@ -96,7 +96,15 @@ you are certain you need to change it.
 			</tr>
 			<tr>
 				<td>
-					<label for="textfield"><strong>Root Password: (required)</strong></label>
+					<label for="rootuser"><strong>Root User: (required)</strong></label>
+				</td>
+				<td>
+					<input class="inputbox" required type="text" value="root" name="rootuser">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="rootpass"><strong>Root Password: (required)</strong></label>
 				</td>
 				<td>
 					<input class="inputbox" required type="password" name="rootpass">

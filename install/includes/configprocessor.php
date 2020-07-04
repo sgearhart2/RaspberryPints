@@ -13,6 +13,7 @@ require_once __DIR__.'/sql_parse.php';
 
 //Process and load form data
 $servername = $_POST["servername"];
+$rootuser = $_POST["rootuser"] ?? 'root';
 $rootpass = $_POST["rootpass"];
 $dbuser = $_POST["dbuser"];
 $dbpass1 = $_POST["dbpass1"];
@@ -51,7 +52,7 @@ echo "Checking DB connectivity...";
 flush();
 $rootDbInfo = [
 	'server' => $servername,
-	'user' => "root",
+	'user' => $rootuser,
 	'password' => $rootpass
 ];
 require '../../includes/DB.php';

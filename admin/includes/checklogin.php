@@ -1,5 +1,5 @@
 <?php
-use RaspberryPints\Db;
+use RaspberryPints\DB;
 
 session_start();
 $session=session_id();

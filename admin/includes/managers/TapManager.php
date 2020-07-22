@@ -78,7 +78,7 @@ class TapManager{
 	function updateTapNumber($newTapNumber){
 		$DB = DB::getInstance();
 
-		$sql="UPDATE config SET configValue = ?, modifiedDate = NOW() WHERE configName = ?;";
+		$sql = "UPDATE config SET configValue = ?, modifiedDate = NOW() WHERE configName = ?;";
 		$DB->execute($sql, [
 			['type' => DB::BIND_TYPE_INT, 'value' => $newTapNumber],
 			['type' => DB::BIND_TYPE_STRING, 'value' => ConfigNames::NumberOfTaps]
@@ -89,7 +89,7 @@ class TapManager{
 			['type' => DB::BIND_TYPE_INT, 'value' => $newTapNumber],
 		]);
 
-		$sql="UPDATE taps SET active = 0, modifiedDate = NOW() WHERE active = 1 AND tapNumber > ?;";
+		$sql = "UPDATE taps SET active = 0, modifiedDate = NOW() WHERE active = 1 AND tapNumber > ?;";
 		$DB->execute($sql, [
 			['type' => DB::BIND_TYPE_INT, 'value' => $newTapNumber]
 		]);

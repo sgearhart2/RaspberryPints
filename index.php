@@ -81,7 +81,7 @@
 						<a href="admin/admin.php"><img src="<?php echo $config[ConfigNames::LogoUrl] . "?" . time(); ?>" height="100" alt=""></a>
 					<?php } ?>
 					<?php
-					if(isset($config[ConfigNames::UntappdBreweryId])) {
+					if($config[ConfigNames::UntappdBreweryId]) {
 						$qrSize = $config[ConfigNames::UseHighResolution] ? 200 : 100;
 						$untappdUrl = "https://untappd.com/qr/brewery/" . strval($config[ConfigNames::UntappdBreweryId]);
 						$qrUrl = "https://chart.googleapis.com/chart?cht=qr&chs=" . $qrSize . "x" . $qrSize . "&chl=" . urlencode($untappdUrl);
@@ -137,7 +137,7 @@
 							</th>
 						<?php } ?>
 
-						<?php if(isset($config[ConfigNames::UntappdBreweryId])){ ?>
+						<?php if($config[ConfigNames::UntappdBreweryId]){ ?>
 							<th class="qr">
 								UNTAPPD<hr>QR CODE
 							</th>
@@ -213,10 +213,10 @@
 									</td>
 								<?php } ?>
 
-								<?php if(isset($config[ConfigNames::UntappdBreweryId])){ ?>
+								<?php if($config[ConfigNames::UntappdBreweryId]){ ?>
 								<td class="qr">
 								<?php
-								if(isset($beer['untappdId'])) {
+								if($beer['untappdId']) {
 									$qrSize = 100;
 									$untappdUrl = "https://untappd.com/qr/beer/" . strval($beer['untappdId']);
 									$qrUrl = "https://chart.googleapis.com/chart?cht=qr&chs=" . $qrSize . "x" . $qrSize . "&chl=" . urlencode($untappdUrl);
@@ -376,7 +376,7 @@
 								<?php } ?>
 
 
-								<?php if(isset($config[ConfigNames::UntappdBreweryId])){ ?>
+								<?php if($config[ConfigNames::UntappdBreweryId]){ ?>
 								<td class="qr"></td>
 								<?php } ?>
 

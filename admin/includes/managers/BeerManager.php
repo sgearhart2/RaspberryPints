@@ -14,6 +14,7 @@ class BeerManager{
 					"SET " .
 						"name = ?," .
 						"beerStyleId = ?, " .
+						"untappdId = ?, " .
 						"notes = ?, " .
 						"ogEst = ?, " .
 						"fgEst = ?, " .
@@ -24,6 +25,7 @@ class BeerManager{
 			$DB->execute($sql, [
 				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_name())],
 				['type' => DB::BIND_TYPE_INT, 'value' => $beer->get_beerStyleId()],
+				['type' => DB::BIND_TYPE_INT, 'value' => $beer->get_untappdId()],
 				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_notes())],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_og()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_fg()],
@@ -33,11 +35,12 @@ class BeerManager{
 			]);
 		}
 		else{
-			$sql = 	"INSERT INTO beers(name, beerStyleId, notes, ogEst, fgEst, srmEst, ibuEst, createdDate, modifiedDate ) " .
-					"VALUES(?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+			$sql = 	"INSERT INTO beers(name, beerStyleId, untappdId, notes, ogEst, fgEst, srmEst, ibuEst, createdDate, modifiedDate ) " .
+					"VALUES(?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
 			$DB->execute($sql, [
 				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_name())],
 				['type' => DB::BIND_TYPE_INT, 'value' => $beer->get_beerStyleId()],
+				['type' => DB::BIND_TYPE_INT, 'value' => $beer->get_untappdId()],
 				['type' => DB::BIND_TYPE_STRING, 'value' => encode($beer->get_notes())],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_og()],
 				['type' => DB::BIND_TYPE_DOUBLE, 'value' => $beer->get_fg()],

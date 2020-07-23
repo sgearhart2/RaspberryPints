@@ -37,8 +37,8 @@ class TapManager{
 				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_id()]
 			]);
 		}else{
-			$sql = 	"INSERT INTO taps(beerId, kegId, tapNumber, pinId, ogAct, fgAct, srmAct, ibuAct, startAmount, currentAmount, active, createdDate, modifiedDate ) " .
-					"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+			$sql = 	"INSERT INTO taps (beerId, kegId, tapNumber, pinId, ogAct, fgAct, srmAct, ibuAct, startAmount, currentAmount, active, createdDate, modifiedDate ) " .
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW());";
 
 			$DB->execute($sql, [
 				['type' => DB::BIND_TYPE_INT, 'value' => $tap->get_beerId()],

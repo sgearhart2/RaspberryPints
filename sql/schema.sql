@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `beers` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`name` text NOT NULL,
 	`beerStyleId` int(11) NOT NULL,
+	`untappdId` int(11),
 	`notes` text NOT NULL,
 	`ogEst` decimal(4,3) NOT NULL,
 	`fgEst` decimal(4,3) NOT NULL,
@@ -766,6 +767,7 @@ AS
 SELECT
 	t.id,
 	b.name,
+	b.untappdId,
 	bs.name as 'style',
 	b.notes,
 	t.ogAct,

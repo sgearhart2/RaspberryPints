@@ -13,10 +13,10 @@ hr {
 	height: 1px;
 	-webkit-margin-before: 2px;
 	-webkit-margin-after: 2px;
-	background-image: -webkit-linear-gradient(left, rgba(255,255,255,255), rgba(255,255,255,0.75), rgba(255,255,255,255)); 
-	background-image:    -moz-linear-gradient(left, rgba(255,255,255,255), rgba(255,255,255,0.75), rgba(255,255,255,255)); 
-	background-image:     -ms-linear-gradient(left, rgba(255,255,255,255), rgba(255,255,255,0.75), rgba(255,255,255,255)); 
-	background-image:      -o-linear-gradient(left, rgba(255,255,255,255), rgba(255,255,255,0.75), rgba(255,255,255,255)); 
+	background-image: -webkit-linear-gradient(left, rgba(255,255,255,255), rgba(255,255,255,0.75), rgba(255,255,255,255));
+	background-image:    -moz-linear-gradient(left, rgba(255,255,255,255), rgba(255,255,255,0.75), rgba(255,255,255,255));
+	background-image:     -ms-linear-gradient(left, rgba(255,255,255,255), rgba(255,255,255,0.75), rgba(255,255,255,255));
+	background-image:      -o-linear-gradient(left, rgba(255,255,255,255), rgba(255,255,255,0.75), rgba(255,255,255,255));
 }
 h1 {
 	display:block;
@@ -126,8 +126,14 @@ table .srm{
 table .ibu{
 	width: 125px;
 	text-align: center;
-	vertical-align: middle;	
+	vertical-align: middle;
 }
+table .qr {
+	width: 125px;
+	text-align: center;
+	vertical-align: middle;
+}
+
 table td.name{
 	text-align: left;
 	padding: 5px;
@@ -140,7 +146,7 @@ table .abv{
 table .keg{
 	width: 150px;
 	text-align: center;
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 table td.tap-num{
@@ -157,7 +163,7 @@ span.tapcircle {
   line-height: 2em;
   margin-right: 5px;
   text-align: center;
-  width: 2em; 
+  width: 2em;
 }
 table h3 {
 	text-align: center;
@@ -184,13 +190,13 @@ table .subhead{
 }
 
 .srm-indicator{
-	position: absolute; 
+	position: absolute;
 	height: 100%;
 	width: 100%;
 	top: 0;
 	left: 0;
 	z-index: 1;
-	
+
 	-webkit-mask-image: url(img/srm/pint-mask.png);
 	-o-mask-image: url(img/srm/pint-mask.png);
 	-moz-mask-image: url(img/srm/pint-mask.png);
@@ -198,13 +204,13 @@ table .subhead{
 }
 
 .srm-stroke{
-	position: absolute; 
+	position: absolute;
 	height: 100%;
 	width: 100%;
 	top: 0;
 	left: 0;
 	z-index: 2;
-	
+
 	background: url(img/srm/pint-stroke.png)
 }
 
@@ -230,7 +236,7 @@ table .subhead{
 	width: 100%;
 	background: url(img/ibu/full.png) no-repeat bottom left;
 }
-	
+
 .ibu-max{
 	position: absolute;
 	top: -5px;
@@ -241,7 +247,7 @@ table .subhead{
 	height: 100px;
 	width: 115px;
 	margin: 8px auto;
-}	
+}
 .abv-indicator{
 	display: inline-block;
 	position: relative;
@@ -262,7 +268,7 @@ table .subhead{
 	left: 8px;
 	height: 55px;
 	width: 114px;
-	background: url(img/abv/offthechart.png) no-repeat bottom left;	
+	background: url(img/abv/offthechart.png) no-repeat bottom left;
 }
 
 .keg-container{
@@ -278,7 +284,7 @@ table .subhead{
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background: url(img/keg/stroke.png) no-repeat bottom left;	
+	background: url(img/keg/stroke.png) no-repeat bottom left;
 }
 .keg-indicator .keg-full{
 	position: absolute;

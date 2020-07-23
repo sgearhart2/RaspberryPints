@@ -10,6 +10,7 @@ class Beer implements JsonSerializable
   private $_id;
   private $_name;
 	private $_beerStyleId;
+  private $_untappdId;
 	private $_notes;
 	private $_og;
 	private $_fg;
@@ -29,6 +30,9 @@ class Beer implements JsonSerializable
 
 	public function get_beerStyleId(){ return $this->_beerStyleId; }
 	public function set_beerStyleId($_beerStyleId){ $this->_beerStyleId = $_beerStyleId; }
+
+  public function get_untappdId(){ return $this->_untappdId; }
+  public function set_untappdId($_untappdId){ $this->_untappdId = $_untappdId; }
 
 	public function get_notes(){ return $this->_notes; }
 	public function set_notes($_notes){ $this->_notes = $_notes; }
@@ -70,6 +74,12 @@ class Beer implements JsonSerializable
 			$this->set_beerStyleId($postArr['beerStyleId']);
 		}else{
 			$this->set_beerStyleId(null);
+		}
+
+		if( isset($postArr['untappdId']) ){
+			$this->set_untappdId($postArr['untappdId']);
+		}else{
+			$this->set_untappdId(null);
 		}
 
 		if( isset($postArr['notes']) )
@@ -145,6 +155,7 @@ class Beer implements JsonSerializable
       'id' => $this->get_id(),
       'name' => $this->get_name(),
       'beerStyleId' => $this->get_beerStyleId(),
+      'untappdId' => $this->get_untappdId(),
       'notes' => $this->get_notes(),
       'srm' => $this->get_srm(),
       'og' => $this->get_og(),

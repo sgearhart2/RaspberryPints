@@ -82,6 +82,9 @@ class DB {
   private function prepareStatement(string $sql, array $bindVariables) : mysqli_stmt {
       $stmt = mysqli_prepare($this->conn, $sql);
 
+      if($stmt == false) {
+        throw new Exception('Error "' . $this->conn->error . '" in query "' . $sql . '".');
+      }
       if(count($bindVariables) > 0) {
         $bindArgs = [$stmt, ''];
 

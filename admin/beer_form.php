@@ -111,6 +111,14 @@ require __DIR__.'/header.php';
 			</tr>
 			<tr>
 				<td>
+					<b>Untappd Id:</b>
+				</td>
+				<td>
+					<input type="text" id="untappdId" class="xsmallbox" name="untappdId" value="<?php echo $beer->get_untappdId() ?>" />
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<b>SRM:<font color="red">*</font></b>
 				</td>
 				<td>

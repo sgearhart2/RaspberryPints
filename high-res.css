@@ -13,6 +13,10 @@ table .ibu{
 	width: 250px;
 }
 
+table .tr {
+	width: 250px;
+}
+
 table .abv{
 	width: 350px;
 }
@@ -20,7 +24,7 @@ table .keg{
 	width: 250px;
 }
 
-span.tapcircle {	
+span.tapcircle {
   font-size: 30px;
 }
 
@@ -51,11 +55,11 @@ span.tapcircle {
 .ibu-indicator .ibu-full{
 	background-image: url(img/ibu/full-4k.png);
 }
-	
+
 .abv-container{
 	height: 200px;
 	width: 230px;
-}	
+}
 .abv-indicator{
 	background-image: url(img/abv/stroke-4k.png);
 }
@@ -74,7 +78,7 @@ span.tapcircle {
 }
 
 .keg-indicator{
-	background-image: url(img/keg/stroke-4k.png);	
+	background-image: url(img/keg/stroke-4k.png);
 }
 .keg-indicator .keg-full{
 	background-image: url(img/keg/full-4k.png);

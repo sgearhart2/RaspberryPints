@@ -33,6 +33,7 @@
 			$beers[$row['tapNumber']] = [
 				"id" => $row['id'],
 				"beername" => $row['name'],
+				'untappdId' => $row['untappdId'],
 				"style" => $row['style'],
 				"notes" => $row['notes'],
 				"og" => $row['ogAct'],
@@ -82,13 +83,13 @@
 					<?php
 					if(isset($config[ConfigNames::UntappdBreweryId])) {
 						$qrSize = $config[ConfigNames::UseHighResolution] ? 200 : 100;
-						$untappdUrl = "https://untappd.com/qr/brewery/" . $config[ConfigNames::UntappdBreweryId];
+						$untappdUrl = "https://untappd.com/qr/brewery/" . strval($config[ConfigNames::UntappdBreweryId]);
 						$qrUrl = "https://chart.googleapis.com/chart?cht=qr&chs=" . $qrSize . "x" . $qrSize . "&chl=" . urlencode($untappdUrl);
 					?>
 						<img
-							src="https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=https%3A%2F%2Funtappd%2Ecom%2Fqr%2Fbrewery%2F"
-							height="<?php echo $qrSize; ?>"
-							width="<?php echo $qrSize; ?>"
+							src="<?= $qrUrl ?>"
+							height="<?= $qrSize ?>"
+							width="<?= $qrSize ?>"
 							/>
 					<?php
 					}
@@ -133,6 +134,12 @@
 						<?php if($config[ConfigNames::ShowIbuCol]){ ?>
 							<th class="ibu">
 								BALANCE<hr>BITTERNESS
+							</th>
+						<?php } ?>
+
+						<?php if(isset($config[ConfigNames::UntappdBreweryId])){ ?>
+							<th class="qr">
+								UNTAPPD<hr>QR CODE
 							</th>
 						<?php } ?>
 
@@ -205,6 +212,23 @@
 										<h2><?php echo $beer['ibu']; ?> IBU</h2>
 									</td>
 								<?php } ?>
+
+								<?php if(isset($config[ConfigNames::UntappdBreweryId])){ ?>
+								<td class="qr">
+								<?php
+								if(isset($beer['untappdId'])) {
+									$qrSize = 100;
+									$untappdUrl = "https://untappd.com/qr/beer/" . strval($beer['untappdId']);
+									$qrUrl = "https://chart.googleapis.com/chart?cht=qr&chs=" . $qrSize . "x" . $qrSize . "&chl=" . urlencode($untappdUrl);
+								?>
+									<img
+										src="<?= $qrUrl ?>"
+										height="<?= $qrSize ?>"
+										width="<?= $qrSize ?>"
+										/>
+								<?php } ?>
+					      </td>
+							  <?php } ?>
 
 								<td class="name">
 									<h1><?php echo $beer['beername']; ?></h1>
@@ -349,6 +373,11 @@
 										</div>
 										<h2></h2>
 									</td>
+								<?php } ?>
+
+
+								<?php if(isset($config[ConfigNames::UntappdBreweryId])){ ?>
+								<td class="qr"></td>
 								<?php } ?>
 
 								<td class="name">

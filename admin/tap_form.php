@@ -153,7 +153,7 @@ include 'header.php';
 				</td>
 			</tr>
 		<!-- If useFlowMeters is off this will not display -->
-		<?php 
+		<?php
 			if($config[ConfigNames::UseFlowMeter]) {
 				?>
 			<tr>

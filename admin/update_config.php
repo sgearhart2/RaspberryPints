@@ -3,18 +3,20 @@ session_start();
 if(!isset( $_SESSION['myusername'] )){
   header("location:index.php");
 }
-use RaspberryPints\ConfigNames;
+use \RaspberryPints\DB;
+
 require_once 'includes/functions.php';
 
 // Get values from form
-$header_text = $_POST['header_text'];
+$configName = $_POST['configName'];
+$configValue = $_POST['configValue'];
 
 // update data in mysql database
 $DB = DB::getInstance();
 $sql = "UPDATE config SET configValue = ? WHERE configName = ?";
 $result = $DB->execute($sql, [
-  ['type' => DB::BIND_TYPE_STRING, 'value' => $header_text],
-  ['type' => DB::BIND_TYPE_STRING, 'value' => ConfigNames::HeaderText]
+  ['type' => DB::BIND_TYPE_STRING, 'value' => strval($configValue)],
+  ['type' => DB::BIND_TYPE_STRING, 'value' => strval($configName)]
 ]);
 
 // if successfully updated.

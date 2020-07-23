@@ -79,6 +79,20 @@
 					<?php } else { ?>
 						<a href="admin/admin.php"><img src="<?php echo $config[ConfigNames::LogoUrl] . "?" . time(); ?>" height="100" alt=""></a>
 					<?php } ?>
+					<?php
+					if(isset($config[ConfigNames::UntappdBreweryId])) {
+						$qrSize = $config[ConfigNames::UseHighResolution] ? 200 : 100;
+						$untappdUrl = "https://untappd.com/qr/brewery/" . $config[ConfigNames::UntappdBreweryId];
+						$qrUrl = "https://chart.googleapis.com/chart?cht=qr&chs=" . $qrSize . "x" . $qrSize . "&chl=" . urlencode($untappdUrl);
+					?>
+						<img
+							src="https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=https%3A%2F%2Funtappd%2Ecom%2Fqr%2Fbrewery%2F"
+							height="<?php echo $qrSize; ?>"
+							width="<?php echo $qrSize; ?>"
+							/>
+					<?php
+					}
+					 ?>
 				</div>
 				<div class="HeaderCenter">
 					<h1 id="HeaderTitle">

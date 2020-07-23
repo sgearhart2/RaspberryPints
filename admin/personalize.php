@@ -49,7 +49,7 @@ include 'header.php';
 		<form method="post" action="update_column.php">
 			<?php
 				$DB = DB::getInstance();
-				$result = $DB->get("select * from config;");
+				$result = $DB->get("select * from config where showOnPanel = 1;");
 
 				foreach($result as $row) {
 				echo '<h3>' . $row['displayName'] . ":" . '</h3>' .
@@ -72,8 +72,9 @@ include 'header.php';
 			$headerText= count($result) > 0 ? $result[0]['configValue'] : '';
 		?>
 		<p><b>Text to Display:</b></p>
-			<form method="post" action="update_header_text.php">
-				<input type="text" class="largebox" value="<?php echo $headerText['configValue']; ?>" name="header_text"> &nbsp
+			<form method="post" action="udpate_config.php">
+				<input type="hidden" value="<?php echo ConfigNames::HeaderText; ?>" name="configName">
+				<input type="text" class="largebox" value="<?php echo $headerText; ?>" name="configValue"> &nbsp
 				<input type="submit" class="btn" name="Submit" value="Submit">
 			</form><br><br>
 		<?php
@@ -84,8 +85,9 @@ include 'header.php';
 			$headerTextTruncLen = $result[0]['configValue'];
 		?>
 		<p><b>Truncate To:</b> (# characters)</p>
-			<form method="post" action="update_header_text_trunclen.php">
-				<input type="text" class="smallbox" value="<?php echo $headerTextTruncLen['configValue']; ?>" name="header_text_trunclen"> &nbsp
+			<form method="post" action="update_config.php">
+				<input type="hidden" value="<?php echo ConfigNames::HeaderTextTruncLen; ?>" name="configName">
+				<input type="text" class="smallbox" value="<?php echo $headerTextTruncLen; ?>" name="configValue"> &nbsp
 				<input type="submit" class="btn" name="Submit" value="Submit">
 			</form>
 		<hr />
@@ -122,7 +124,21 @@ include 'header.php';
 			<form action="restore_background.php" method="POST">
 				<input type="submit" class="btn" value="Restore Default Background" />
 			</form>
-
+			<?php
+				$result = $DB->get(
+					"select configValue from config where configName = ?;",
+					[["type" => DB::BIND_TYPE_STRING, "value" => ConfigNames::UntappdBreweryId]]
+				);
+				$untappdBreweryId= count($result) > 0 ? $result[0]['configValue'] : '';
+			?>
+			<h2>Untappd</h2>
+				<p>Information for connecting your taplist to Untappd</p>
+				<p><b>Brewery Id:</b></p>
+				<form method="post" action="update_config.php">
+					<input type="hidden" value="<?php echo ConfigNames::UntappdBreweryId; ?>" name="configName">
+					<input type="text" class="largebox" value="<?php echo $untappdBreweryId; ?>" name="configValue"> &nbsp
+					<input type="submit" class="btn" name="Submit" value="Submit">
+				</form><br><br>
 	</div>
 </div>
 

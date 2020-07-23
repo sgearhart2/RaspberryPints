@@ -84,7 +84,7 @@ class TapManager{
 			['type' => DB::BIND_TYPE_STRING, 'value' => ConfigNames::NumberOfTaps]
 		]);
 
-		$sql = "UPDATE kegs SET kegStatusCode = 'SANITIZED', modifiedDate = NOW() WHERE id in (SELECT kegId from Taps where tapNumber > ? AND active = 1)";
+		$sql = "UPDATE kegs SET kegStatusCode = 'SANITIZED', modifiedDate = NOW() WHERE id in (SELECT kegId from taps where tapNumber > ? AND active = 1)";
 		$DB->execute($sql, [
 			['type' => DB::BIND_TYPE_INT, 'value' => $newTapNumber],
 		]);

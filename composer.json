@@ -1,0 +1,20 @@
+{
+    "name": "sgearhart/raspberry-pints",
+    "type": "project",
+    "require": {
+        "chillerlan/php-qrcode": "^4.1"
+    },
+    "authors": [
+        {
+            "name": "Scott Gearhart",
+            "email": "sgearhart2@gmail.com"
+        }
+    ],
+    "autoload" : {
+      "psr-4" : {
+        "RaspberryPints\\" : "includes/",
+        "RaspberryPints\\Admin\\Managers\\" : "admin/includes/managers/",
+        "RaspberryPints\\Admin\\Models\\" : "admin/includes/models/"
+      }
+    }
+}

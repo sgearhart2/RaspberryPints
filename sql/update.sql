@@ -34,3 +34,12 @@ FROM taps t
 	LEFT JOIN vwGetTapsAmountPoured as p ON p.tapId = t.Id
 WHERE t.active = true
 ORDER BY t.tapNumber;
+
+DELETE from srmRgb;
+
+LOAD DATA INFILE './data/srmRgb.csv'
+INTO TABLE `srmRgb`
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+IGNORE 1 ROWS
+(srm, rgb)
+SET createdDate = NOW(), modifiedDate = NOW();

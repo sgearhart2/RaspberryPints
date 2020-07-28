@@ -47,7 +47,7 @@ SET createdDate = NOW(), modifiedDate = NOW();
 
 delete from beerStyleGuidelines where id = 2018;
 
-insert into beerStyleGuideLines
+insert into beerStyleGuidelines
 (id, name, modifiedDate, createdDate)
 VALUES
 (2018,'2018 BJCP Provisional Styles', NOW(), NOW());

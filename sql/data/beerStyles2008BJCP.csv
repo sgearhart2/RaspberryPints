@@ -73,7 +73,7 @@ Old Ale,19A,Strong Ale,1.06,1.09,1.015,1.022,6,9,30,60,10,22
 English Barleywine,19B,Strong Ale,1.08,1.12,1.018,1.03,8,12,35,70,8,22
 American Barleywine,19C,Strong Ale,1.08,1.12,1.016,1.03,8,12,50,120,10,19
 Fruit Beer,20A,Fruit Beer,1.03,1.11,1.004,1.024,2.5,12,5,70,3,50
-Spice, Herb or Vegetable Beer,21A,Spice/Herb/Vegetable Beer,1.03,1.11,1.005,1.025,2.5,12,0,70,5,50
+"Spice, Herb or Vegetable Beer",21A,Spice/Herb/Vegetable Beer,1.03,1.11,1.005,1.025,2.5,12,0,70,5,50
 Christmas/Winter Specialty Spice Beer,21B,Spice/Herb/Vegetable Beer,1.03,1.11,1.005,1.025,2.5,12,0,70,5,50
 Classic Rauchbier,22A,Smoke-Flavored and Wood-Aged Beer,1.05,1.057,1.012,1.016,4.8,6,20,30,12,22
 Other Smoked Beer,22B,Smoke-Flavored and Wood-Aged Beer,1.03,1.11,1.006,1.024,2.5,12,5,70,5,50

@@ -1,0 +1,5 @@
+name,catNum,category,ogMin,ogMax,fgMin,fgMax,abvMin,abvMax,ibuMin,ibuMax,srmMin,srmMax
+"British Strong Ale: Burton Ale","17A","Strong British Ale",1.055,1.075,1.018,1.024,5,7.5,40,50,14,22
+"Specialty IPA: New England IPA","21B","IPA",1.060,1.085,1.010,1.015,6,9,25,60,3,7
+"Catharina Sour","X4","Catharina Sour",1.039,1.048,1.002,1.008,4,5.5,2,8,2,7
+"New Zealand Pilsner","X5","New Zealand Pilsner",1.044,1.056,1.009,1.014,4.5,5.8,25,45,2,7

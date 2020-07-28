@@ -43,3 +43,30 @@ FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 ROWS
 (srm, rgb)
 SET createdDate = NOW(), modifiedDate = NOW();
+
+
+delete from beerStyleGuidelines where id = 2018;
+
+insert into beerStyleGuideLines
+(id, name, modifiedDate, createdDate)
+VALUES
+(2018,'2018 BJCP Provisional Styles', NOW(), NOW());
+
+delete from beerStyles where beerStyleGuidelineId = 2015;
+
+LOAD DATA INFILE './data/beerStyles2015BJCP.csv'
+INTO TABLE `beerStyles`
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+IGNORE 1 ROWS
+(name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax)
+SET beerStyleGuidelineId = 2015, createdDate = NOW(), modifiedDate = NOW();
+
+
+delete from beerStyles where beerStyleGuidelineId = 2018;
+
+LOAD DATA INFILE './data/beerStyles2018BJCPProvisional.csv'
+INTO TABLE `beerStyles`
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+IGNORE 1 ROWS
+(name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax)
+SET beerStyleGuidelineId = 2018, createdDate = NOW(), modifiedDate = NOW();

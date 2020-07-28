@@ -86,12 +86,14 @@
 						$qrSize = $config[ConfigNames::UseHighResolution] ? 200 : 100;
 						$untappdUrl = "https://untappd.com/qr/brewery/" . strval($config[ConfigNames::UntappdBreweryId]);
 					?>
+						<a href="<?= $untappdUrl ?>" alt="Untapped">
 						<img
 							class="qrCode"
 							src="<?= (new QRCode)->render($untappdUrl) ?>"
 							height="<?= $qrSize ?>"
 							width="<?= $qrSize ?>"
 							/>
+						</a>
 					<?php
 					}
 					 ?>
@@ -221,12 +223,14 @@
 									$qrSize = 100;
 									$untappdUrl = "https://untappd.com/qr/beer/" . strval($beer['untappdId']);
 								?>
+								  <a href="<?= $untappdUrl ?>" alt="Untapped">
 									<img
 										class="qrCode"
 										src="<?= (new QRCode)->render($untappdUrl) ?>"
 										height="<?= $qrSize ?>"
 										width="<?= $qrSize ?>"
 										/>
+									</a>
 								<?php } ?>
 					      </td>
 							  <?php } ?>

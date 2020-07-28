@@ -35,9 +35,11 @@ if( isset($_GET['id'])){
 $beerStyleList = $beerStyleManager->GetAll();
 $filteredStylesList = [];
 $beerStyle = $beerStyleManager->GetById($beer->get_beerStyleId());
-foreach($beerStyleList as $style) {
-	if($beerStyle->get_beerStyleGuidelineId() == $style->get_beerStyleGuidelineId()) {
-		$filteredStylesList[] = $style;
+if($beerStyle) {
+	foreach($beerStyleList as $style) {
+		if($beerStyle->get_beerStyleGuidelineId() == $style->get_beerStyleGuidelineId()) {
+			$filteredStylesList[] = $style;
+		}
 	}
 }
 $beerStyleGuidelineList = $beerStyleGuidelineManager->GetAll();
@@ -98,7 +100,7 @@ require __DIR__.'/header.php';
 					<b>Style Guideline:<font color="red">*</font></b>
 				</td>
 				<td>
-					<?php echo $htmlHelper->ToSelectList("beerStyleGuidelineId", $beerStyleGuidelineList, "name", "id", $beerStyle->get_beerStyleGuidelineId(), "Select One"); ?>
+					<?php echo $htmlHelper->ToSelectList("beerStyleGuidelineId", $beerStyleGuidelineList, "name", "id", $beerStyle ? $beerStyle->get_beerStyleGuidelineId() : -1, "Select One"); ?>
 				</td>
 			</tr>
 			<tr>

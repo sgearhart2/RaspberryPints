@@ -4,7 +4,6 @@ INSERT INTO `raspberrypints`.`config` (`id`, `configName`, `configValue`, `displ
 ALTER TABLE `pours` CHANGE `amountPoured` `amountPoured` FLOAT( 6, 3 ) NOT NULL;
 ALTER TABLE  `pours` ADD  `pulses` INT( 6 ) NOT NULL AFTER  `amountPoured`;
 
-
 -- Adding untappdId
 INSERT INTO `raspberrypints`.`config` (`id`, `configName`, `configValue`, `displayName`, `showOnPanel`, `createdDate`, `modifiedDate`) VALUES (NULL, 'untappdBreweryId', '', 'Untappd Brewery Id', '0', NOW(), NOW());
 
@@ -44,15 +43,28 @@ IGNORE 1 ROWS
 (srm, rgb)
 SET createdDate = NOW(), modifiedDate = NOW();
 
+CREATE TABLE IF NOT EXISTS `beerStyleGuidelines` (
+	`id` int(4) NOT NULL,
+	`name` tinytext NOT NULL,
+	`createdDate` TIMESTAMP NULL,
+	`modifiedDate` TIMESTAMP NULL,
 
-delete from beerStyleGuidelines where id = 2018;
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB	DEFAULT CHARSET=latin1;
 
-insert into beerStyleGuidelines
-(id, name, modifiedDate, createdDate)
-VALUES
-(2018,'2018 BJCP Provisional Styles', NOW(), NOW());
+LOAD DATA INFILE './data/beerStyleGuidelines.csv'
+INTO TABLE `beerStyleGuidelines`
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+IGNORE 1 ROWS
+(id, name)
+SET createdDate = NOW(), modifiedDate = NOW();
 
-delete from beerStyles where beerStyleGuidelineId = 2015;
+alter table `beerStyles` ADD
+`beerStyleGuidelineId` int(4) AFTER `id`;
+update `beerStyles` set `beerStyleGuidelineId` = 2008;
+update `beerStyles` set `beerStyleGuidelineId` = 0 where `catNum` = 'N/A';
+alter table `beerStyles` MODIFY `beerStyleGuidelineId` NOT NULL;
+alter table `beerStyles` ADD constraint FOREIGN KEY (`beerStyleGuidelineId`) REFERENCES beerStyleGuidelines(`id`) ON DELETE CASCADE;
 
 LOAD DATA INFILE './data/beerStyles2015BJCP.csv'
 INTO TABLE `beerStyles`
@@ -60,9 +72,6 @@ FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 ROWS
 (name, catNum, category, ogMin, ogMax, fgMin, fgMax, abvMin, abvMax, ibuMin, ibuMax, srmMin, srmMax)
 SET beerStyleGuidelineId = 2015, createdDate = NOW(), modifiedDate = NOW();
-
-
-delete from beerStyles where beerStyleGuidelineId = 2018;
 
 LOAD DATA INFILE './data/beerStyles2018BJCPProvisional.csv'
 INTO TABLE `beerStyles`

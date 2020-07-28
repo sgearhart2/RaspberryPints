@@ -35,9 +35,9 @@ if( isset($_GET['id'])){
 $beerStyleList = $beerStyleManager->GetAll();
 $filteredStylesList = [];
 $beerStyle = $beerStyleManager->GetById($beer->get_beerStyleId());
-foreach($beerStyleList as $beerStyle) {
-	if($beerStyle->get_beerStyleGuidelineId() == $beerStyle->get_beerStyleGuidelineId()) {
-		$filteredStylesList[] = $beerStyle;
+foreach($beerStyleList as $style) {
+	if($beerStyle->get_beerStyleGuidelineId() == $style->get_beerStyleGuidelineId()) {
+		$filteredStylesList[] = $style;
 	}
 }
 $beerStyleGuidelineList = $beerStyleGuidelineManager->GetAll();
@@ -114,7 +114,7 @@ require __DIR__.'/header.php';
 					<b>Untappd Id:</b>
 				</td>
 				<td>
-					<input type="text" id="untappdId" class="xsmallbox" name="untappdId" value="<?php echo $beer->get_untappdId() ?>" />
+					<input type="text" id="untappdId" class="smallbox" name="untappdId" value="<?php echo $beer->get_untappdId() ?>" />
 				</td>
 			</tr>
 			<tr>
@@ -122,7 +122,7 @@ require __DIR__.'/header.php';
 					<b>SRM:<font color="red">*</font></b>
 				</td>
 				<td>
-					<input type="text" id="srm" class="xsmallbox" name="srm" value="<?php echo $beer->get_srm() ?>" />
+					<input type="text" id="srm" class="smallbox" name="srm" value="<?php echo $beer->get_srm() ?>" />
 				</td>
 			</tr>
 			<tr>
@@ -130,7 +130,7 @@ require __DIR__.'/header.php';
 					<b>IBU:<font color="red">*</font></b>
 				</td>
 				<td>
-					<input type="text" id="ibu" class="xsmallbox" name="ibu" value="<?php echo $beer->get_ibu() ?>" />
+					<input type="text" id="ibu" class="smallbox" name="ibu" value="<?php echo $beer->get_ibu() ?>" />
 				</td>
 			</tr>
 			<tr>

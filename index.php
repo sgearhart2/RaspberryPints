@@ -6,6 +6,7 @@
 	use RaspberryPints\DB;
 	use RaspberryPints\ConfigNames;
 	use RaspberryPints\Admin\Managers\TapManager;
+	use chillerlan\QRCode\QRCode;
 
 	//This can be used to choose between CSV or MYSQL DB
 	$db = true;
@@ -84,10 +85,10 @@
 					if($config[ConfigNames::UntappdBreweryId]) {
 						$qrSize = $config[ConfigNames::UseHighResolution] ? 200 : 100;
 						$untappdUrl = "https://untappd.com/qr/brewery/" . strval($config[ConfigNames::UntappdBreweryId]);
-						$qrUrl = "https://chart.googleapis.com/chart?cht=qr&chs=" . $qrSize . "x" . $qrSize . "&chl=" . urlencode($untappdUrl);
 					?>
 						<img
-							src="<?= $qrUrl ?>"
+							class="qrCode"
+							src="<?= (new QRCode)->render($untappdUrl) ?>"
 							height="<?= $qrSize ?>"
 							width="<?= $qrSize ?>"
 							/>
@@ -219,10 +220,10 @@
 								if($beer['untappdId']) {
 									$qrSize = 100;
 									$untappdUrl = "https://untappd.com/qr/beer/" . strval($beer['untappdId']);
-									$qrUrl = "https://chart.googleapis.com/chart?cht=qr&chs=" . $qrSize . "x" . $qrSize . "&chl=" . urlencode($untappdUrl);
 								?>
 									<img
-										src="<?= $qrUrl ?>"
+										class="qrCode"
+										src="<?= (new QRCode)->render($untappdUrl) ?>"
 										height="<?= $qrSize ?>"
 										width="<?= $qrSize ?>"
 										/>

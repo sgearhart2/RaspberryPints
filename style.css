@@ -308,3 +308,7 @@ table .subhead{
 .keg-indicator .keg-green{
 	background-image: url(img/keg/green.png);
 }
+
+img.qrCode {
+	background-color: #A0A0A0;
+}

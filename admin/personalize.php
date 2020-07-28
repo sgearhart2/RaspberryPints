@@ -131,6 +131,8 @@ include 'header.php';
 				);
 				$untappdBreweryId= count($result) > 0 ? $result[0]['configValue'] : '';
 			?>
+			<hr/>
+	    <a name="untappd"></a>
 			<h2>Untappd</h2>
 				<p>Information for connecting your taplist to Untappd</p>
 				<p><b>Brewery Id:</b></p>

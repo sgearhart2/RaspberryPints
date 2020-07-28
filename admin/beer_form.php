@@ -218,7 +218,7 @@ require __DIR__.'/scripts.php';
 					$('#beerStyleId').append(
 						$('<option/>')
 							.attr('value', beerStyles[beerStyleId].id)
-							.text(beerStyles[beerStyleId].name)
+							.html(beerStyles[beerStyleId].name)
 					);
 				}
 			}

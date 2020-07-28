@@ -162,7 +162,7 @@ include 'header.php';
 										7.1% Crystal 15, 2-Row, (Great Western) (15.0 SRM)<br>
 										-->
 										</p>
-										
+
 										<p><b><u>Mash Profile:</u></b></p><p>
 										<!--
 										Step 1: Dough-in @ 70&deg;F (2 min)<br>
@@ -171,7 +171,7 @@ include 'header.php';
 										Step 4: Batch Sparge @ 168&deg;F (5 min)</p>
 										-->
 										</p>
-										
+
 										<p><b><u>Hop Schedule:</u></b></p><p>
 										<!--
 										0.90 oz Simcoe (13.00% AA) @ 90 min<br>

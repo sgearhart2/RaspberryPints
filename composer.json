@@ -2,7 +2,8 @@
     "name": "sgearhart/raspberry-pints",
     "type": "project",
     "require": {
-        "chillerlan/php-qrcode": "^4.1"
+        "chillerlan/php-qrcode": "^4.1",
+        "select2/select2": "^4.0"
     },
     "authors": [
         {

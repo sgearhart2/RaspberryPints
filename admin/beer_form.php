@@ -53,6 +53,7 @@ $beerStyleGuidelineList = $beerStyleGuidelineManager->GetAll();
 <title>RaspberryPints</title>
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="styles/wysiwyg.css" rel="stylesheet" type="text/css" />
+<link href="../vendor/select2/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
 	<!-- Theme Start -->
 <link href="styles.css" rel="stylesheet" type="text/css" />
 	<!-- Theme End -->
@@ -108,7 +109,7 @@ require __DIR__.'/header.php';
 					<b>Style:<font color="red">*</font></b>
 				</td>
 				<td>
-					<?php echo $htmlHelper->ToSelectList("beerStyleId", $filteredStylesList, "name", "id", $beer->get_beerStyleId(), "Select One"); ?>
+					<?php echo $htmlHelper->ToSelectList("beerStyleId", $filteredStylesList, "name", "id", $beer->get_beerStyleId(), "Select One", "select2"); ?>
 				</td>
 			</tr>
 			<tr>
@@ -225,6 +226,8 @@ require __DIR__.'/scripts.php';
 				}
 			}
 		});
+
+		$('.select2').select2();
 
 	});
 </script>

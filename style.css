@@ -1,3 +1,7 @@
+html {
+        font-size : 80%;
+}
+
 body {
 	background-image: url(img/background.jpg);
 	background-color: #000000;
